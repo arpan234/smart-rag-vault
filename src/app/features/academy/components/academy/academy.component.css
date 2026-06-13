@@ -1,0 +1,139 @@
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+svg {
+  user-select: none;
+}
+
+text {
+  font-family: inherit;
+}
+
+/* Custom needle origin transition */
+.origin-bottom {
+  transform-origin: bottom center;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.stroke-2 {
+  stroke-width: 2px;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom visual flow animation styles */
+@keyframes march {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.animate-march {
+  stroke-dasharray: 6, 4;
+  animation: march 0.8s linear infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+  }
+}
+
+.active-glow-violet {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring-emerald {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.active-glow-emerald {
+  animation: pulse-ring-emerald 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring-amber {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+  }
+}
+
+.active-glow-amber {
+  animation: pulse-ring-amber 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes float-packet {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float-packet {
+  animation: float-packet 2.5s ease-in-out infinite;
+}
+
+@keyframes float-tokens {
+  0% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--tx, 0px), var(--ty, -40px)) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.animate-float-token {
+  animation: float-tokens 3s ease-in-out infinite;
+}
+
+.connection-path {
+  transition: stroke 0.4s ease, stroke-width 0.4s ease;
+}

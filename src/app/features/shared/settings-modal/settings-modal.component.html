@@ -1,0 +1,263 @@
+<!-- Settings Drawer Backdrop -->
+<div 
+  *ngIf="settingsService.isSettingsOpen()" 
+  class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-xs z-50 animate-fade-in"
+  (click)="settingsService.closeSettings()">
+</div>
+
+<!-- Settings Drawer Panel -->
+<div 
+  *ngIf="settingsService.isSettingsOpen()" 
+  class="fixed top-0 right-0 bottom-0 w-full sm:w-[480px] bg-white dark:bg-zinc-950 border-l border-zinc-200/60 dark:border-zinc-800/60 shadow-2xl z-50 flex flex-col animate-slide-in"
+  role="dialog" 
+  aria-modal="true">
+  
+  <!-- Header -->
+  <div class="px-6 py-5 border-b border-zinc-100 dark:border-zinc-900 flex justify-between items-center bg-zinc-50/50 dark:bg-zinc-900/20">
+    <div class="flex items-center gap-2.5">
+      <lucide-icon [name]="SettingsIcon" class="w-5 h-5 text-violet-500"></lucide-icon>
+      <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-50">RAG Settings Configuration</h2>
+    </div>
+    <button 
+      (click)="settingsService.closeSettings()"
+      class="p-1.5 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors">
+      <lucide-icon [name]="XIcon" class="w-5 h-5"></lucide-icon>
+    </button>
+  </div>
+
+  <!-- Content (Scrollable) -->
+  <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin">
+    
+    <!-- API Provider Section -->
+    <div class="space-y-3">
+      <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">LLM Provider</label>
+      <div class="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-900/60 p-1 rounded-xl">
+        <button 
+          (click)="settingsService.setProvider('gemini')"
+          [class.bg-white]="settingsService.provider() === 'gemini'"
+          [class.dark:bg-zinc-800]="settingsService.provider() === 'gemini'"
+          [class.text-zinc-900]="settingsService.provider() === 'gemini'"
+          [class.dark:text-zinc-100]="settingsService.provider() === 'gemini'"
+          [class.shadow-xs]="settingsService.provider() === 'gemini'"
+          [class.text-zinc-500]="settingsService.provider() !== 'gemini'"
+          class="py-2 text-sm font-medium rounded-lg text-center transition-all cursor-pointer">
+          Google Gemini
+        </button>
+        <button 
+          (click)="settingsService.setProvider('openai')"
+          [class.bg-white]="settingsService.provider() === 'openai'"
+          [class.dark:bg-zinc-800]="settingsService.provider() === 'openai'"
+          [class.text-zinc-900]="settingsService.provider() === 'openai'"
+          [class.dark:text-zinc-100]="settingsService.provider() === 'openai'"
+          [class.shadow-xs]="settingsService.provider() === 'openai'"
+          [class.text-zinc-500]="settingsService.provider() !== 'openai'"
+          class="py-2 text-sm font-medium rounded-lg text-center transition-all cursor-pointer">
+          OpenAI
+        </button>
+      </div>
+    </div>
+
+    <!-- API Key Input -->
+    <div class="space-y-2">
+      <div class="flex justify-between items-center">
+        <label for="settingsApiKey" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">API Key</label>
+        <a 
+          [href]="settingsService.provider() === 'gemini' ? 'https://aistudio.google.com/' : 'https://platform.openai.com/api-keys'" 
+          target="_blank"
+          class="text-xs text-violet-500 hover:underline flex items-center gap-0.5">
+          Get key
+        </a>
+      </div>
+      <div class="relative">
+        <input 
+          id="settingsApiKey"
+          [type]="showKey() ? 'text' : 'password'"
+          [value]="settingsService.apiKey()"
+          (input)="settingsService.setApiKey($any($event.target).value)"
+          placeholder="Paste your {{settingsService.provider() === 'gemini' ? 'Gemini' : 'OpenAI'}} API key here"
+          class="w-full pl-4 pr-11 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-sm focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200"
+        />
+        <button 
+          (click)="toggleShowKey()"
+          class="absolute top-1/2 -translate-y-1/2 right-3 p-1 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer">
+          <lucide-icon [name]="showKey() ? EyeOffIcon : EyeIcon" class="w-4 h-4"></lucide-icon>
+        </button>
+      </div>
+      <p class="text-xs text-zinc-400 leading-normal">
+        Your API key is stored locally in your browser and is only sent directly to the official LLM endpoints.
+      </p>
+    </div>
+
+    <!-- Active LLM Model Selection -->
+    <div class="space-y-2">
+      <label for="llmModelSelect" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Active Chat Model</label>
+      <select 
+        id="llmModelSelect"
+        [value]="settingsService.model()"
+        (change)="settingsService.setModel($any($event.target).value)"
+        class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-sm focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 cursor-pointer">
+        <ng-container *ngIf="settingsService.provider() === 'gemini'">
+          <option value="gemini-3.5-flash">gemini-3.5-flash (Recommended)</option>
+          <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+        </ng-container>
+        <ng-container *ngIf="settingsService.provider() === 'openai'">
+          <option value="gpt-4o-mini">gpt-4o-mini (Recommended)</option>
+          <option value="gpt-4o">gpt-4o</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <!-- Vector Embeddings Configuration -->
+    <div class="space-y-3 pt-2 border-t border-zinc-100 dark:border-zinc-900">
+      <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Embedding Engine</label>
+      <div class="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-900/60 p-1 rounded-xl">
+        <button 
+          (click)="settingsService.setEmbeddingMode('local-vsm')"
+          [class.bg-white]="settingsService.embeddingMode() === 'local-vsm'"
+          [class.dark:bg-zinc-800]="settingsService.embeddingMode() === 'local-vsm'"
+          [class.text-zinc-900]="settingsService.embeddingMode() === 'local-vsm'"
+          [class.dark:text-zinc-100]="settingsService.embeddingMode() === 'local-vsm'"
+          [class.shadow-xs]="settingsService.embeddingMode() === 'local-vsm'"
+          [class.text-zinc-500]="settingsService.embeddingMode() !== 'local-vsm'"
+          class="py-2 text-xs font-medium rounded-lg text-center transition-all cursor-pointer">
+          Local VSM (TF-IDF)
+        </button>
+        <button 
+          (click)="settingsService.setEmbeddingMode('api')"
+          [class.bg-white]="settingsService.embeddingMode() === 'api'"
+          [class.dark:bg-zinc-800]="settingsService.embeddingMode() === 'api'"
+          [class.text-zinc-900]="settingsService.embeddingMode() === 'api'"
+          [class.dark:text-zinc-100]="settingsService.embeddingMode() === 'api'"
+          [class.shadow-xs]="settingsService.embeddingMode() === 'api'"
+          [class.text-zinc-500]="settingsService.embeddingMode() !== 'api'"
+          class="py-2 text-xs font-medium rounded-lg text-center transition-all cursor-pointer">
+          Neural Embedding (API)
+        </button>
+      </div>
+      <p class="text-xs text-zinc-400 leading-normal">
+        <span class="font-medium text-zinc-600 dark:text-zinc-300">Local VSM:</span> Computes word-overlap similarity vectors entirely in the browser (free, offline, great for visualizing math).<br/>
+        <span class="font-medium text-zinc-600 dark:text-zinc-300">API Embeddings:</span> Generates 1536/768-dim semantic dense vectors via the provider API key (high accuracy).
+      </p>
+    </div>
+
+    <!-- Text Chunking Hyperparameters -->
+    <div class="space-y-4 pt-2 border-t border-zinc-100 dark:border-zinc-900">
+      <div class="flex justify-between items-center">
+        <span class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Document Chunking Parameters</span>
+      </div>
+      
+      <!-- Chunk Size -->
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs font-medium">
+          <label for="settingsChunkSize" class="text-zinc-500 dark:text-zinc-400 cursor-pointer">Chunk Size</label>
+          <span class="text-violet-500 font-mono">{{settingsService.chunkSize()}} characters</span>
+        </div>
+        <input 
+          id="settingsChunkSize"
+          type="range" 
+          min="100" 
+          max="2000" 
+          step="50"
+          [value]="settingsService.chunkSize()"
+          (input)="settingsService.setChunkParams(+$any($event.target).value, settingsService.chunkOverlap())"
+          class="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+        />
+      </div>
+
+      <!-- Chunk Overlap -->
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs font-medium">
+          <label for="settingsChunkOverlap" class="text-zinc-500 dark:text-zinc-400 cursor-pointer">Chunk Overlap</label>
+          <span class="text-violet-500 font-mono">{{settingsService.chunkOverlap()}} characters</span>
+        </div>
+        <input 
+          id="settingsChunkOverlap"
+          type="range" 
+          min="0" 
+          max="500" 
+          step="10"
+          [value]="settingsService.chunkOverlap()"
+          (input)="settingsService.setChunkParams(settingsService.chunkSize(), +$any($event.target).value)"
+          class="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+        />
+      </div>
+    </div>
+
+    <!-- Retrieval Hyperparameters -->
+    <div class="space-y-4 pt-2 border-t border-zinc-100 dark:border-zinc-900">
+      <span class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">RAG Search Parameters</span>
+      
+      <!-- Top K -->
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs font-medium">
+          <label for="settingsTopK" class="text-zinc-500 dark:text-zinc-400 cursor-pointer">Top Chunks Retrieved (K)</label>
+          <span class="text-violet-500 font-mono">k = {{settingsService.topK()}}</span>
+        </div>
+        <input 
+          id="settingsTopK"
+          type="range" 
+          min="1" 
+          max="10" 
+          step="1"
+          [value]="settingsService.topK()"
+          (input)="settingsService.setSearchThresholds(+$any($event.target).value, settingsService.similarityThreshold())"
+          class="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+        />
+      </div>
+
+      <!-- Similarity Threshold -->
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs font-medium">
+          <label for="settingsSimilarityThreshold" class="text-zinc-500 dark:text-zinc-400 cursor-pointer">Min Cosine Similarity Threshold</label>
+          <span class="text-violet-500 font-mono">{{(settingsService.similarityThreshold() * 100).toFixed(0)}}% match</span>
+        </div>
+        <input 
+          id="settingsSimilarityThreshold"
+          type="range" 
+          min="0.0" 
+          max="1.0" 
+          step="0.05"
+          [value]="settingsService.similarityThreshold()"
+          (input)="settingsService.setSearchThresholds(settingsService.topK(), +$any($event.target).value)"
+          class="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+        />
+      </div>
+    </div>
+
+    <!-- Reset database -->
+    <div class="pt-4 border-t border-zinc-100 dark:border-zinc-900 space-y-3">
+      <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400">Danger Zone</label>
+      <button 
+        (click)="handleResetDatabase()"
+        [class.bg-emerald-600]="resetSuccess()"
+        [class.hover:bg-emerald-700]="resetSuccess()"
+        [class.bg-rose-50/50]="!resetSuccess()"
+        [class.hover:bg-rose-100/50]="!resetSuccess()"
+        [class.text-rose-600]="!resetSuccess()"
+        [class.dark:bg-rose-950/20]="!resetSuccess()"
+        [class.dark:text-rose-400]="!resetSuccess()"
+        [class.border-rose-200/50]="!resetSuccess()"
+        [class.dark:border-rose-900/30]="!resetSuccess()"
+        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 border text-sm font-medium rounded-xl transition-all cursor-pointer">
+        <lucide-icon [name]="resetSuccess() ? CheckIcon : TrashIcon" class="w-4 h-4"></lucide-icon>
+        {{ resetSuccess() ? 'Database Purged Successfully!' : 'Clear Vector Database' }}
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="px-6 py-4 border-t border-zinc-100 dark:border-zinc-900 flex gap-3 bg-zinc-50/50 dark:bg-zinc-900/10">
+    <button 
+      (click)="settingsService.closeSettings()"
+      class="flex-1 px-4 py-2.5 text-center text-sm font-semibold rounded-xl text-zinc-600 dark:text-zinc-300 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors cursor-pointer">
+      Cancel
+    </button>
+    <button 
+      (click)="settingsService.closeSettings()"
+      class="flex-1 px-4 py-2.5 text-center text-sm font-semibold rounded-xl text-white bg-violet-600 hover:bg-violet-700 shadow-md shadow-violet-500/15 transition-colors cursor-pointer">
+      Apply Settings
+    </button>
+  </div>
+
+</div>

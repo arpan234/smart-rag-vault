@@ -1,0 +1,1510 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in select-none">
+
+  <!-- Page Header -->
+  <div class="text-center space-y-3 max-w-3xl mx-auto mb-8">
+    <div
+      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase text-violet-600 dark:text-violet-400 bg-violet-500/10 border border-violet-500/20 shadow-xs">
+      <lucide-icon [name]="AcademyIcon" class="w-3.5 h-3.5"></lucide-icon>
+      Interactive Learning Academy
+    </div>
+    <h2
+      class="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-zinc-50 bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
+      Learn RAG & Vector Databases Interactively
+    </h2>
+    <p class="text-xs text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+      Step into our educational laboratory. Master the concepts, calculations, and execution architectures of modern AI
+      retrieval through visual simulations.
+    </p>
+  </div>
+
+  <!-- Level Navigation Grid -->
+  <div
+    class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-5xl mx-auto mb-8 bg-zinc-100/80 dark:bg-zinc-900/60 p-1.5 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40">
+    <!-- Intro / Start Here -->
+    <button (click)="setLevel('intro')" [class.bg-white]="activeLevel() === 'intro'"
+      [class.dark:bg-zinc-800]="activeLevel() === 'intro'" [class.text-zinc-950]="activeLevel() === 'intro'"
+      [class.dark:text-zinc-50]="activeLevel() === 'intro'" [class.shadow-md]="activeLevel() === 'intro'"
+      [class.text-zinc-500]="activeLevel() !== 'intro'"
+      class="py-3 px-1 rounded-xl text-center transition-all cursor-pointer flex flex-col items-center gap-1">
+      <span class="text-xs font-extrabold uppercase tracking-wider">Start Here</span>
+      <span class="text-[9px] font-medium opacity-60 hidden sm:inline">RAG Core Concepts</span>
+    </button>
+
+    <!-- Beginner -->
+    <button (click)="setLevel('beginner')" [class.bg-white]="activeLevel() === 'beginner'"
+      [class.dark:bg-zinc-800]="activeLevel() === 'beginner'" [class.text-zinc-950]="activeLevel() === 'beginner'"
+      [class.dark:text-zinc-50]="activeLevel() === 'beginner'" [class.shadow-md]="activeLevel() === 'beginner'"
+      [class.text-zinc-500]="activeLevel() !== 'beginner'"
+      class="py-3 px-2 rounded-xl text-center transition-all cursor-pointer flex flex-col items-center gap-1">
+      <span class="text-xs font-extrabold uppercase tracking-wider">Level 1: Beginner</span>
+      <span class="text-[9px] font-medium opacity-60 hidden sm:inline">Semantic Vector Map</span>
+    </button>
+
+    <!-- Intermediate -->
+    <button (click)="setLevel('intermediate')" [class.bg-white]="activeLevel() === 'intermediate'"
+      [class.dark:bg-zinc-800]="activeLevel() === 'intermediate'"
+      [class.text-zinc-950]="activeLevel() === 'intermediate'"
+      [class.dark:text-zinc-50]="activeLevel() === 'intermediate'" [class.shadow-md]="activeLevel() === 'intermediate'"
+      [class.text-zinc-500]="activeLevel() !== 'intermediate'"
+      class="py-3 px-2 rounded-xl text-center transition-all cursor-pointer flex flex-col items-center gap-1">
+      <span class="text-xs font-extrabold uppercase tracking-wider">Level 2: Intermediate</span>
+      <span class="text-[9px] font-medium opacity-60 hidden sm:inline">Cosine Similarity Math</span>
+    </button>
+
+    <!-- Expert -->
+    <button (click)="setLevel('expert')" [class.bg-white]="activeLevel() === 'expert'"
+      [class.dark:bg-zinc-800]="activeLevel() === 'expert'" [class.text-zinc-950]="activeLevel() === 'expert'"
+      [class.dark:text-zinc-50]="activeLevel() === 'expert'" [class.shadow-md]="activeLevel() === 'expert'"
+      [class.text-zinc-500]="activeLevel() !== 'expert'"
+      class="py-3 px-2 rounded-xl text-center transition-all cursor-pointer flex flex-col items-center gap-1">
+      <span class="text-xs font-extrabold uppercase tracking-wider">Level 3: Expert</span>
+      <span class="text-[9px] font-medium opacity-60 hidden sm:inline">RAG Prompt Sandbox</span>
+    </button>
+  </div>
+
+  <!-- WORKSPACE FRAME -->
+  <div class="max-w-5xl mx-auto">
+
+    <!-- ================= LEVEL 0: INTRO WORKSPACE ================= -->
+    @if (activeLevel() === 'intro') {
+    <div class="space-y-6 animate-fade-in text-left">
+
+      <!-- RAG 101 Primer: What, Why, When, How -->
+      <div class="glass-card p-6 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-5">
+        <div>
+          <h3
+            class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-1.5">
+            <lucide-icon [name]="AcademyIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+            RAG 101: What, Why, When & How?
+          </h3>
+          <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+            Welcome to the laboratory! If you are new to Retrieval-Augmented Generation, start with these four
+            fundamental concepts.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Card 1: WHAT -->
+          <div
+            class="p-4 bg-zinc-500/5 dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/50 rounded-2xl flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-xl bg-violet-500/10 text-violet-500 border border-violet-500/20">
+                  <lucide-icon [name]="BookOpenIcon" class="w-4 h-4"></lucide-icon>
+                </span>
+                <span class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">1. What is
+                  RAG?</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                <strong>Retrieval-Augmented Generation</strong> is a way to link pre-trained AI brains with your own
+                private text files (PDFs, text files, SQL databases) in real time.
+              </p>
+            </div>
+            <span class="text-[9px] font-mono text-violet-500 bg-violet-500/5 px-2 py-0.5 rounded self-start">The
+              Definition</span>
+          </div>
+
+          <!-- Card 2: WHY -->
+          <div
+            class="p-4 bg-zinc-500/5 dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/50 rounded-2xl flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                  <lucide-icon [name]="ShieldCheckIcon" class="w-4 h-4"></lucide-icon>
+                </span>
+                <span class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">2. Why do we
+                  need it?</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                AI brains normally freeze in time after training and make up answers (hallucinate). RAG provides a
+                search engine that grabs facts first, forcing 100% accuracy.
+              </p>
+            </div>
+            <span class="text-[9px] font-mono text-emerald-500 bg-emerald-500/5 px-2 py-0.5 rounded self-start">The
+              Benefit</span>
+          </div>
+
+          <!-- Card 3: WHEN -->
+          <div
+            class="p-4 bg-zinc-500/5 dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/50 rounded-2xl flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20">
+                  <lucide-icon [name]="LayersIcon" class="w-4 h-4"></lucide-icon>
+                </span>
+                <span class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">3. When to use
+                  it?</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                Choose RAG when documents change frequently or when facts are private. Choose Fine-Tuning when you want
+                to change the model's behavior, tone, or dialect.
+              </p>
+            </div>
+            <span class="text-[9px] font-mono text-blue-500 bg-blue-500/5 px-2 py-0.5 rounded self-start">RAG vs.
+              Fine-Tuning</span>
+          </div>
+
+          <!-- Card 4: HOW -->
+          <div
+            class="p-4 bg-zinc-500/5 dark:bg-zinc-900/30 border border-zinc-200/40 dark:border-zinc-800/50 rounded-2xl flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-xl bg-pink-500/10 text-pink-500 border border-pink-500/20">
+                  <lucide-icon [name]="SettingsIcon" class="w-4 h-4"></lucide-icon>
+                </span>
+                <span class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">4. How does it
+                  work?</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                Convert files to vector coordinates ➔ Match query coordinate in Vector DB ➔ Combine query + fetched
+                context ➔ Feed prompt to LLM to write answer.
+              </p>
+            </div>
+            <span class="text-[9px] font-mono text-pink-500 bg-pink-500/5 px-2 py-0.5 rounded self-start">The
+              Workflow</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conceptual Overview: What is RAG? -->
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Interactive Analogy Card -->
+        <div
+          class="lg:col-span-2 glass-card p-6 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+            <div>
+              <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">The "Open Book"
+                Analogy</h3>
+              <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+                Toggle the switch to see how RAG compares to a traditional "Closed Book" exam.
+              </p>
+            </div>
+
+            <!-- Analogy Toggle -->
+            <div
+              class="flex items-center bg-zinc-100 dark:bg-zinc-900/60 p-1 rounded-xl border border-zinc-200/30 dark:border-zinc-800/30 shrink-0">
+              <button (click)="analogyMode.set('closed')" [class.bg-white]="analogyMode() === 'closed'"
+                [class.dark:bg-zinc-800]="analogyMode() === 'closed'" [class.text-zinc-950]="analogyMode() === 'closed'"
+                [class.dark:text-zinc-100]="analogyMode() === 'closed'"
+                [class.text-zinc-400]="analogyMode() !== 'closed'"
+                class="px-3 py-1.5 text-[9px] font-bold rounded-lg transition-all cursor-pointer">
+                Closed Book
+              </button>
+              <button (click)="analogyMode.set('open')" [class.bg-white]="analogyMode() === 'open'"
+                [class.dark:bg-zinc-800]="analogyMode() === 'open'" [class.text-zinc-950]="analogyMode() === 'open'"
+                [class.dark:text-zinc-100]="analogyMode() === 'open'" [class.text-zinc-400]="analogyMode() !== 'open'"
+                class="px-3 py-1.5 text-[9px] font-bold rounded-lg transition-all cursor-pointer">
+                Open Book (RAG)
+              </button>
+            </div>
+          </div>
+
+          <!-- Analogy Illustration Container -->
+          <div
+            class="p-6 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 relative overflow-hidden min-h-[180px] flex flex-col justify-between">
+            @if (analogyMode() === 'closed') {
+            <div class="space-y-3 animate-fade-in">
+              <div class="flex items-center gap-2">
+                <span
+                  class="p-1.5 rounded-lg bg-rose-500/10 text-rose-500 border border-rose-500/20 text-[10px] font-bold uppercase tracking-wider">Scenario
+                  A: Standard LLM</span>
+                <span class="text-[10px] text-zinc-400 font-mono">No database connection</span>
+              </div>
+              <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <strong>Closed Book Exam:</strong> The student (LLM) must answer a highly specific question relying
+                purely on their memory (training data). If they can't remember, they are forced to make an educated
+                guess, leading to **hallucinations** or generic "out-of-knowledge" refusals.
+              </p>
+              <div
+                class="p-2.5 bg-rose-500/5 dark:bg-rose-955/20 border border-rose-500/10 rounded-xl text-[10px] font-mono text-rose-600 dark:text-rose-400">
+                User: "What is Chef Leo's signature soup?" ➔ LLM: "Chef Leo's signature soup is a traditional vegetable
+                broth with parsley, tomatoes, and mushrooms." (Incorrect!)
+              </div>
+            </div>
+            } @else if (analogyMode() === 'open') {
+            <div class="space-y-3 animate-fade-in">
+              <div class="flex items-center gap-2">
+                <span
+                  class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-wider">Scenario
+                  B: RAG-Augmented</span>
+                <span class="text-[10px] text-zinc-400 font-mono">Connected to Vector DB</span>
+              </div>
+              <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <strong>Open Book Exam:</strong> Before writing the answer, the student searches a textbook (Vector
+                Database) for the exact page covering the topic. They copy-paste that text block directly onto their
+                scratchpad, compiling a factual, citation-backed response.
+              </p>
+              <div
+                class="p-2.5 bg-emerald-500/5 dark:bg-emerald-955/20 border border-emerald-500/10 rounded-xl text-[10px] font-mono text-emerald-600 dark:text-emerald-400">
+                User: "What is Chef Leo's signature soup?" ➔ Vector DB finds: "Chef Leo's strawberry soup has black
+                pepper." ➔ LLM: "It consists of strawberries, honey, and black pepper." (Correct!)
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Definition Card -->
+        <div
+          class="glass-card p-6 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4 bg-violet-500/5 dark:bg-violet-500/2">
+          <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">What does RAG mean?
+          </h3>
+
+          <div class="space-y-3.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+            <div>
+              <span
+                class="font-extrabold text-violet-600 dark:text-violet-400 uppercase tracking-wide block text-[10px] mb-0.5">Retrieval
+                (R)</span>
+              Searching through a database of uploaded documents to find segments semantically related to the user's
+              question.
+            </div>
+            <div>
+              <span
+                class="font-extrabold text-violet-600 dark:text-violet-400 uppercase tracking-wide block text-[10px] mb-0.5">Augmented
+                (A)</span>
+              Injecting the retrieved database text blocks into the LLM prompt, backing the request with concrete
+              contextual evidence.
+            </div>
+            <div>
+              <span
+                class="font-extrabold text-violet-600 dark:text-violet-400 uppercase tracking-wide block text-[10px] mb-0.5">Generation
+                (G)</span>
+              The LLM synthesizes a fluent, natural response based on the injected context, inserting inline references
+              and source citations.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Real-World Case Studies interactive section -->
+      <div class="glass-card p-6 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4">
+        <div>
+          <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">Where is RAG Used?
+            (Real-World Applications)</h3>
+          <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+            Click on any industry below to see how RAG is deployed in production codebases to solve critical business
+            problems.
+          </p>
+        </div>
+
+        <!-- Case study grid buttons -->
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-zinc-100/50 dark:bg-zinc-900/40 p-1.5 rounded-2xl border border-zinc-200/30 dark:border-zinc-800/30">
+          <button (click)="selectedCaseStudy.set('support')" [class.bg-white]="selectedCaseStudy() === 'support'"
+            [class.dark:bg-zinc-800]="selectedCaseStudy() === 'support'"
+            [class.text-violet-600]="selectedCaseStudy() === 'support'"
+            [class.dark:text-violet-400]="selectedCaseStudy() === 'support'"
+            [class.shadow-xs]="selectedCaseStudy() === 'support'"
+            [class.text-zinc-500]="selectedCaseStudy() !== 'support'"
+            class="py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer text-center transition-all">
+            Customer Support
+          </button>
+          <button (click)="selectedCaseStudy.set('legal')" [class.bg-white]="selectedCaseStudy() === 'legal'"
+            [class.dark:bg-zinc-800]="selectedCaseStudy() === 'legal'"
+            [class.text-violet-600]="selectedCaseStudy() === 'legal'"
+            [class.dark:text-violet-400]="selectedCaseStudy() === 'legal'"
+            [class.shadow-xs]="selectedCaseStudy() === 'legal'" [class.text-zinc-500]="selectedCaseStudy() !== 'legal'"
+            class="py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer text-center transition-all">
+            Legal Research
+          </button>
+          <button (click)="selectedCaseStudy.set('medical')" [class.bg-white]="selectedCaseStudy() === 'medical'"
+            [class.dark:bg-zinc-800]="selectedCaseStudy() === 'medical'"
+            [class.text-violet-600]="selectedCaseStudy() === 'medical'"
+            [class.dark:text-violet-400]="selectedCaseStudy() === 'medical'"
+            [class.shadow-xs]="selectedCaseStudy() === 'medical'"
+            [class.text-zinc-500]="selectedCaseStudy() !== 'medical'"
+            class="py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer text-center transition-all">
+            Clinical Assistants
+          </button>
+          <button (click)="selectedCaseStudy.set('finance')" [class.bg-white]="selectedCaseStudy() === 'finance'"
+            [class.dark:bg-zinc-800]="selectedCaseStudy() === 'finance'"
+            [class.text-violet-600]="selectedCaseStudy() === 'finance'"
+            [class.dark:text-violet-400]="selectedCaseStudy() === 'finance'"
+            [class.shadow-xs]="selectedCaseStudy() === 'finance'"
+            [class.text-zinc-500]="selectedCaseStudy() !== 'finance'"
+            class="py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer text-center transition-all">
+            Financial Analysis
+          </button>
+        </div>
+
+        <!-- Case study details visualizer -->
+        <div
+          class="p-5 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200/40 dark:border-zinc-800/40 rounded-2xl space-y-4 animate-fade-in">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wide">{{
+              caseStudies[selectedCaseStudy()].title }}</span>
+            <span class="text-[9px] font-mono text-zinc-400 bg-zinc-200/50 dark:bg-zinc-900 px-2.5 py-1 rounded">{{
+              caseStudies[selectedCaseStudy()].citation }}</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+            <div class="p-3.5 bg-rose-500/5 dark:bg-rose-950/10 border border-rose-500/10 rounded-xl space-y-2">
+              <span class="text-[9px] text-rose-500 font-extrabold uppercase tracking-wider block">The Problem (Without
+                RAG)</span>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">{{
+                caseStudies[selectedCaseStudy()].problem }}</p>
+            </div>
+
+            <div
+              class="p-3.5 bg-emerald-500/5 dark:bg-emerald-950/10 border border-emerald-500/10 rounded-xl space-y-2">
+              <span class="text-[9px] text-emerald-500 font-extrabold uppercase tracking-wider block">The Solution (With
+                RAG)</span>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">{{
+                caseStudies[selectedCaseStudy()].ragSolution }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interactive RAG Pipeline Flow Simulator -->
+      <div class="glass-card p-6 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-6">
+
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-3">
+          <div>
+            <h3
+              class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-1.5">
+              <lucide-icon [name]="SparklesIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+              Interactive RAG Pipeline Simulator
+            </h3>
+            <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+              Type a search query or choose a preset. Watch the visual flow packet travel between RAG architecture
+              nodes.
+            </p>
+          </div>
+
+          <!-- Step Badge -->
+          <span
+            class="self-start md:self-auto text-[10px] font-mono font-bold px-3 py-1.5 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20">
+            Step {{ animStep() }} of 6:
+            <span class="font-extrabold uppercase ml-1">
+              {{ animStep() === 1 ? 'Prompt' :
+              animStep() === 2 ? 'Vector' :
+              animStep() === 3 ? 'DB Scan' :
+              animStep() === 4 ? 'Retrieval' :
+              animStep() === 5 ? 'Augment' : 'Answer' }}
+            </span>
+          </span>
+        </div>
+
+        <!-- Search Bar and Presets -->
+        <div
+          class="space-y-3.5 bg-zinc-50/50 dark:bg-zinc-950/20 p-4 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <!-- Search bar input -->
+            <div class="flex-1 relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
+                <lucide-icon [name]="SearchIcon" class="w-4 h-4"></lucide-icon>
+              </div>
+              <input id="customSearchInput" type="text" [(ngModel)]="animSearchInput"
+                (keyup.enter)="submitAnimSearch()"
+                placeholder="Search the RAG Vault... (e.g. secret soup ingredients, company mascot)"
+                aria-label="Search the RAG Vault simulator"
+                class="w-full pl-9 pr-24 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 text-xs focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200" />
+              <div class="absolute inset-y-0 right-0 pr-1.5 flex items-center">
+                <button (click)="submitAnimSearch()"
+                  class="h-7 px-3 text-[10px] font-bold rounded-lg text-white bg-violet-600 hover:bg-violet-700 transition-all cursor-pointer">
+                  Search
+                </button>
+              </div>
+            </div>
+
+            <!-- Controls block -->
+            <div
+              class="flex items-center gap-1 shrink-0 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-1">
+              <button (click)="stepAnim('prev')"
+                class="p-1.5 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all cursor-pointer"
+                title="Previous Step">
+                <lucide-icon [name]="SkipBackIcon" class="w-3.5 h-3.5"></lucide-icon>
+              </button>
+              <button (click)="animPlaying() ? pauseAnim() : startAnim()"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-extrabold text-white bg-violet-600 hover:bg-violet-700 transition-all cursor-pointer shadow-xs">
+                <lucide-icon [name]="animPlaying() ? PauseIcon : PlayIcon" class="w-3 h-3"></lucide-icon>
+                <span>{{ animPlaying() ? 'Pause' : 'Play Flow' }}</span>
+              </button>
+              <button (click)="stepAnim('next')"
+                class="p-1.5 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all cursor-pointer"
+                title="Next Step">
+                <lucide-icon [name]="SkipForwardIcon" class="w-3.5 h-3.5"></lucide-icon>
+              </button>
+              <button (click)="resetAnim()"
+                class="p-1.5 rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all cursor-pointer"
+                title="Reset Flow">
+                <lucide-icon [name]="ResetIcon" class="w-3.5 h-3.5"></lucide-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick presets list -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Presets:</span>
+            <button (click)="selectAnimQuery('What are the ingredients in Chef Leo\'s secret soup?')"
+              [class.bg-violet-500/10]="animQuery() === 'What are the ingredients in Chef Leo\'s secret soup?'"
+              [class.text-violet-600]="animQuery() === 'What are the ingredients in Chef Leo\'s secret soup?'"
+              [class.dark:text-violet-400]="animQuery() === 'What are the ingredients in Chef Leo\'s secret soup?'"
+              [class.border-violet-500/30]="animQuery() === 'What are the ingredients in Chef Leo\'s secret soup?'"
+              class="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-955 dark:hover:text-zinc-50 transition-all cursor-pointer">
+              🍲 Soup Recipe
+            </button>
+            <button (click)="selectAnimQuery('Tell me about the company mascot')"
+              [class.bg-violet-500/10]="animQuery() === 'Tell me about the company mascot'"
+              [class.text-violet-600]="animQuery() === 'Tell me about the company mascot'"
+              [class.dark:text-violet-400]="animQuery() === 'Tell me about the company mascot'"
+              [class.border-violet-500/30]="animQuery() === 'Tell me about the company mascot'"
+              class="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-955 dark:hover:text-zinc-50 transition-all cursor-pointer">
+              🐹 Mascot Info
+            </button>
+            <button (click)="selectAnimQuery('What is the server backup passkey?')"
+              [class.bg-violet-500/10]="animQuery() === 'What is the server backup passkey?'"
+              [class.text-violet-600]="animQuery() === 'What is the server backup passkey?'"
+              [class.dark:text-violet-400]="animQuery() === 'What is the server backup passkey?'"
+              [class.border-violet-500/30]="animQuery() === 'What is the server backup passkey?'"
+              class="px-2.5 py-1 text-[10px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-955 dark:hover:text-zinc-50 transition-all cursor-pointer">
+              🔑 Server key
+            </button>
+          </div>
+        </div>
+
+        <!-- Desktop Visual Pipeline Canvas -->
+        <div
+          class="hidden sm:block relative w-full h-[360px] bg-zinc-950 dark:bg-black/70 border border-zinc-905 rounded-3xl p-6 overflow-hidden shadow-inner select-none animate-fade-in">
+
+          <!-- Background Grid Gridlines -->
+          <div
+            class="absolute inset-0 bg-[radial-gradient(#1e1b4b_1px,transparent_1px)] [background-size:16px_16px] opacity-35 pointer-events-none">
+          </div>
+
+          <!-- SVG Flow Pathway Network -->
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none"
+            class="absolute inset-0 w-full h-full pointer-events-none z-0">
+            <defs>
+              <linearGradient id="gradient-1-2" x1="0%" y1="50%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#8b5cf6" />
+                <stop offset="100%" stop-color="#6366f1" />
+              </linearGradient>
+              <linearGradient id="gradient-2-3" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#6366f1" />
+                <stop offset="100%" stop-color="#3b82f6" />
+              </linearGradient>
+              <linearGradient id="gradient-3-4" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3b82f6" />
+                <stop offset="100%" stop-color="#10b981" />
+              </linearGradient>
+              <linearGradient id="gradient-4-5" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#10b981" />
+                <stop offset="100%" stop-color="#ec4899" />
+              </linearGradient>
+              <linearGradient id="gradient-5-1" x1="100%" y1="100%" x2="0%" y2="50%">
+                <stop offset="0%" stop-color="#ec4899" />
+                <stop offset="100%" stop-color="#8b5cf6" />
+              </linearGradient>
+            </defs>
+
+            <!-- 1 -> 2 (User to Embedding) -->
+            <path d="M 12,50 C 22,40 32,30 42,20" [attr.stroke]="animStep() === 1 ? 'url(#gradient-1-2)' : '#1e1b4b'"
+              [attr.stroke-width]="animStep() === 1 ? 2.5 : 1" fill="none" class="connection-path"
+              [class.animate-march]="animStep() === 1" />
+
+            <!-- 2 -> 3 (Embedding to Vector DB) -->
+            <path d="M 42,20 L 42,80" [attr.stroke]="animStep() === 2 ? 'url(#gradient-2-3)' : '#1e1b4b'"
+              [attr.stroke-width]="animStep() === 2 ? 2.5 : 1" fill="none" class="connection-path"
+              [class.animate-march]="animStep() === 2" />
+
+            <!-- 3 -> 4 (Vector DB to Doc Vault) -->
+            <path d="M 42,80 C 52,60 62,40 72,20" [attr.stroke]="animStep() === 3 ? 'url(#gradient-3-4)' : '#1e1b4b'"
+              [attr.stroke-width]="animStep() === 3 ? 2.5 : 1" fill="none" class="connection-path"
+              [class.animate-march]="animStep() === 3" />
+
+            <!-- 4 -> 5 (Doc Vault to LLM Engine) -->
+            <path d="M 72,20 L 72,80" [attr.stroke]="animStep() === 4 ? 'url(#gradient-4-5)' : '#1e1b4b'"
+              [attr.stroke-width]="animStep() === 4 ? 2.5 : 1" fill="none" class="connection-path"
+              [class.animate-march]="animStep() === 4" />
+
+            <!-- 5 -> 1 (LLM Engine back to User) -->
+            <path d="M 72,80 C 52,75 32,65 12,50" [attr.stroke]="animStep() === 5 ? 'url(#gradient-5-1)' : '#1e1b4b'"
+              [attr.stroke-width]="animStep() === 5 ? 2.5 : 1" fill="none" class="connection-path"
+              [class.animate-march]="animStep() === 5" />
+          </svg>
+
+          <!-- Floating Data Packet Orb -->
+          <div
+            [style.left.%]="animStep() === 1 || animStep() === 6 ? 12 : animStep() === 2 ? 42 : animStep() === 3 ? 42 : animStep() === 4 ? 72 : 72"
+            [style.top.%]="animStep() === 1 || animStep() === 6 ? 50 : animStep() === 2 ? 20 : animStep() === 3 ? 80 : animStep() === 4 ? 20 : 80"
+            class="absolute w-5 h-5 -ml-2.5 -mt-2.5 rounded-full bg-violet-500 border border-white dark:border-zinc-950 flex items-center justify-center shadow-lg shadow-violet-500/50 z-20 transition-all duration-1000 ease-in-out animate-float-packet">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </span>
+          </div>
+
+          <!-- Micro-Floating Elements based on step -->
+          <!-- Vector Float numbers at embedding node -->
+          @if (animStep() === 2) {
+          <div class="absolute pointer-events-none select-none text-[9px] font-mono text-violet-400"
+            style="left: 42%; top: 12%;">
+            <span class="absolute animate-float-token" style="--tx: -20px; --ty: -35px;">[0.912]</span>
+            <span class="absolute animate-float-token font-bold text-indigo-400"
+              style="--tx: 24px; --ty: -20px; animation-delay: 0.6s;">[-0.415]</span>
+            <span class="absolute animate-float-token"
+              style="--tx: -5px; --ty: -45px; animation-delay: 1.2s;">[0.052]</span>
+          </div>
+          }
+          <!-- Database Scanning Radar at DB node -->
+          @if (animStep() === 3) {
+          <div class="absolute pointer-events-none select-none"
+            style="left: 42%; top: 80%; transform: translate(-50%, -50%);">
+            <span class="absolute animate-ping opacity-30 w-16 h-16 rounded-full border border-blue-500/50"></span>
+            <span class="absolute animate-ping opacity-15 w-24 h-24 rounded-full border border-blue-400/30"
+              style="animation-delay: 0.5s;"></span>
+          </div>
+          }
+          <!-- Document Text Chunk hover text at Vault node -->
+          @if (animStep() === 4) {
+          <div
+            class="absolute pointer-events-none select-none text-[9px] font-mono text-emerald-400 bg-zinc-900/90 border border-emerald-500/20 px-2.5 py-1 rounded shadow-md animate-fade-in max-w-[140px] truncate"
+            style="left: 72%; top: 10%; transform: translateX(-50%);">
+            📄 {{ animRetrievedChunk().title.split(' ')[0] }} ({{ animRetrievedChunk().score }})
+          </div>
+          }
+          <!-- LLM Sparks at Brain node -->
+          @if (animStep() === 5) {
+          <div class="absolute pointer-events-none select-none text-pink-400" style="left: 72%; top: 80%;">
+            <lucide-icon [name]="SparklesIcon" class="w-3 h-3 absolute animate-float-token"
+              style="--tx: -15px; --ty: -35px;"></lucide-icon>
+            <lucide-icon [name]="SparklesIcon" class="w-2.5 h-2.5 absolute animate-float-token"
+              style="--tx: 15px; --ty: -25px; animation-delay: 0.8s;"></lucide-icon>
+          </div>
+          }
+
+          <!-- Absolute Placed Nodes -->
+
+          <!-- Node 1: User Query -->
+          <div (click)="animStep.set(1); pauseAnim()" [style.left.%]="12" [style.top.%]="50"
+            class="-translate-x-1/2 -translate-y-1/2 absolute z-10 flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div [class.bg-violet-600]="animStep() === 1 || animStep() === 6"
+              [class.text-white]="animStep() === 1 || animStep() === 6"
+              [class.active-glow-violet]="animStep() === 1 || animStep() === 6"
+              [class.scale-110]="animStep() === 1 || animStep() === 6"
+              [class.bg-zinc-900]="animStep() !== 1 && animStep() !== 6"
+              [class.text-zinc-500]="animStep() !== 1 && animStep() !== 6"
+              class="w-12 h-12 rounded-2xl flex items-center justify-center border border-zinc-800 shadow-lg hover:border-violet-500/50 hover:text-violet-400 transition-all duration-300">
+              <lucide-icon [name]="UserIcon" class="w-5 h-5"></lucide-icon>
+            </div>
+            <div class="text-center">
+              <span class="text-[9px] font-extrabold uppercase tracking-wider block"
+                [class.text-violet-400]="animStep() === 1 || animStep() === 6"
+                [class.text-zinc-400]="animStep() !== 1 && animStep() !== 6">1. User</span>
+              <span class="text-[8px] text-zinc-500 font-medium block">Search Start</span>
+            </div>
+          </div>
+
+          <!-- Node 2: Embedding Engine -->
+          <div (click)="animStep.set(2); pauseAnim()" [style.left.%]="42" [style.top.%]="20"
+            class="-translate-x-1/2 -translate-y-1/2 absolute z-10 flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div [class.bg-indigo-600]="animStep() === 2" [class.text-white]="animStep() === 2"
+              [class.active-glow-violet]="animStep() === 2" [class.scale-110]="animStep() === 2"
+              [class.bg-zinc-900]="animStep() !== 2" [class.text-zinc-500]="animStep() !== 2"
+              class="w-12 h-12 rounded-2xl flex items-center justify-center border border-zinc-800 shadow-lg hover:border-indigo-500/50 hover:text-indigo-400 transition-all duration-300">
+              <lucide-icon [name]="BinaryIcon" class="w-5 h-5"></lucide-icon>
+            </div>
+            <div class="text-center">
+              <span class="text-[9px] font-extrabold uppercase tracking-wider block"
+                [class.text-indigo-400]="animStep() === 2" [class.text-zinc-400]="animStep() !== 2">2. Embedding</span>
+              <span class="text-[8px] text-zinc-500 font-medium block">Vector Translation</span>
+            </div>
+          </div>
+
+          <!-- Node 3: Vector Database -->
+          <div (click)="animStep.set(3); pauseAnim()" [style.left.%]="42" [style.top.%]="80"
+            class="-translate-x-1/2 -translate-y-1/2 absolute z-10 flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div [class.bg-blue-600]="animStep() === 3" [class.text-white]="animStep() === 3"
+              [class.active-glow-blue]="animStep() === 3" [class.scale-110]="animStep() === 3"
+              [class.bg-zinc-900]="animStep() !== 3" [class.text-zinc-500]="animStep() !== 3"
+              class="w-12 h-12 rounded-2xl flex items-center justify-center border border-zinc-800 shadow-lg hover:border-blue-500/50 hover:text-blue-400 transition-all duration-300">
+              <lucide-icon [name]="DatabaseIcon" class="w-5 h-5"></lucide-icon>
+            </div>
+            <div class="text-center">
+              <span class="text-[9px] font-extrabold uppercase tracking-wider block"
+                [class.text-blue-400]="animStep() === 3" [class.text-zinc-400]="animStep() !== 3">3. Vector DB</span>
+              <span class="text-[8px] text-zinc-500 font-medium block">Cosine Search Scan</span>
+            </div>
+          </div>
+
+          <!-- Node 4: Document Vault -->
+          <div (click)="animStep.set(4); pauseAnim()" [style.left.%]="72" [style.top.%]="20"
+            class="-translate-x-1/2 -translate-y-1/2 absolute z-10 flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div [class.bg-emerald-600]="animStep() === 4" [class.text-white]="animStep() === 4"
+              [class.active-glow-emerald]="animStep() === 4" [class.scale-110]="animStep() === 4"
+              [class.bg-zinc-900]="animStep() !== 4" [class.text-zinc-500]="animStep() !== 4"
+              class="w-12 h-12 rounded-2xl flex items-center justify-center border border-zinc-800 shadow-lg hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300">
+              <lucide-icon [name]="FileTextIcon" class="w-5 h-5"></lucide-icon>
+            </div>
+            <div class="text-center">
+              <span class="text-[9px] font-extrabold uppercase tracking-wider block"
+                [class.text-emerald-400]="animStep() === 4" [class.text-zinc-400]="animStep() !== 4">4. Doc Vault</span>
+              <span class="text-[8px] text-zinc-500 font-medium block">Chunk Isolation</span>
+            </div>
+          </div>
+
+          <!-- Node 5: LLM Core -->
+          <div (click)="animStep.set(5); pauseAnim()" [style.left.%]="72" [style.top.%]="80"
+            class="-translate-x-1/2 -translate-y-1/2 absolute z-10 flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div [class.bg-pink-600]="animStep() === 5" [class.text-white]="animStep() === 5"
+              [class.active-glow-amber]="animStep() === 5" [class.scale-110]="animStep() === 5"
+              [class.bg-zinc-900]="animStep() !== 5" [class.text-zinc-500]="animStep() !== 5"
+              class="w-12 h-12 rounded-2xl flex items-center justify-center border border-zinc-800 shadow-lg hover:border-pink-500/50 hover:text-pink-400 transition-all duration-300">
+              <lucide-icon [name]="CpuIcon" class="w-5 h-5"></lucide-icon>
+            </div>
+            <div class="text-center">
+              <span class="text-[9px] font-extrabold uppercase tracking-wider block"
+                [class.text-pink-400]="animStep() === 5" [class.text-zinc-400]="animStep() !== 5">5. LLM
+                Synthesis</span>
+              <span class="text-[8px] text-zinc-500 font-medium block">Response Gen</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mobile Stacked Flow Timeline (Responsive fallback) -->
+        <div class="block sm:hidden space-y-3">
+          <!-- Step 1 Card -->
+          <div (click)="animStep.set(1); pauseAnim()"
+            [class.border-violet-500/50]="animStep() === 1 || animStep() === 6"
+            [class.bg-violet-500/5]="animStep() === 1 || animStep() === 6"
+            class="flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 cursor-pointer transition-all duration-200">
+            <div [class.bg-violet-600]="animStep() === 1 || animStep() === 6"
+              [class.text-white]="animStep() === 1 || animStep() === 6"
+              [class.bg-zinc-100]="animStep() !== 1 && animStep() !== 6"
+              [class.text-zinc-400]="animStep() !== 1 && animStep() !== 6"
+              class="w-8 h-8 rounded-lg flex items-center justify-center">
+              <lucide-icon [name]="UserIcon" class="w-4 h-4"></lucide-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-xs font-bold text-zinc-950 dark:text-zinc-50 block">1. User Search Term</span>
+              <span class="text-[10px] text-zinc-400 truncate block">Query: "{{ animQuery() }}"</span>
+            </div>
+            @if (animStep() === 1 || animStep() === 6) {
+            <span class="w-2 h-2 rounded-full bg-violet-500 animate-ping"></span>
+            }
+          </div>
+
+          <!-- Step 2 Card -->
+          <div (click)="animStep.set(2); pauseAnim()" [class.border-indigo-500/50]="animStep() === 2"
+            [class.bg-indigo-500/5]="animStep() === 2"
+            class="flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 cursor-pointer transition-all duration-200">
+            <div [class.bg-indigo-600]="animStep() === 2" [class.text-white]="animStep() === 2"
+              [class.bg-zinc-100]="animStep() !== 2" [class.text-zinc-400]="animStep() !== 2"
+              class="w-8 h-8 rounded-lg flex items-center justify-center">
+              <lucide-icon [name]="BinaryIcon" class="w-4 h-4"></lucide-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-xs font-bold text-zinc-950 dark:text-zinc-50 block">2. Text Embedding Translation</span>
+              <span class="text-[10px] text-zinc-400 truncate block">Converting text to float matrix coordinates</span>
+            </div>
+            @if (animStep() === 2) {
+            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
+            }
+          </div>
+
+          <!-- Step 3 Card -->
+          <div (click)="animStep.set(3); pauseAnim()" [class.border-blue-500/50]="animStep() === 3"
+            [class.bg-blue-500/5]="animStep() === 3"
+            class="flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 cursor-pointer transition-all duration-200">
+            <div [class.bg-blue-600]="animStep() === 3" [class.text-white]="animStep() === 3"
+              [class.bg-zinc-100]="animStep() !== 3" [class.text-zinc-400]="animStep() !== 3"
+              class="w-8 h-8 rounded-lg flex items-center justify-center">
+              <lucide-icon [name]="DatabaseIcon" class="w-4 h-4"></lucide-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-xs font-bold text-zinc-955 dark:text-zinc-50 block">3. Vector DB Search Scan</span>
+              <span class="text-[10px] text-zinc-400 truncate block">Finding closest semantic matching
+                coordinates</span>
+            </div>
+            @if (animStep() === 3) {
+            <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+            }
+          </div>
+
+          <!-- Step 4 Card -->
+          <div (click)="animStep.set(4); pauseAnim()" [class.border-emerald-500/50]="animStep() === 4"
+            [class.bg-emerald-500/5]="animStep() === 4"
+            class="flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 cursor-pointer transition-all duration-200">
+            <div [class.bg-emerald-600]="animStep() === 4" [class.text-white]="animStep() === 4"
+              [class.bg-zinc-100]="animStep() !== 4" [class.text-zinc-400]="animStep() !== 4"
+              class="w-8 h-8 rounded-lg flex items-center justify-center">
+              <lucide-icon [name]="FileTextIcon" class="w-4 h-4"></lucide-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-xs font-bold text-zinc-955 dark:text-zinc-50 block">4. Document Chunk Fetched</span>
+              <span class="text-[10px] text-zinc-400 truncate block">Source text loaded: "{{ animRetrievedChunk().title
+                }}"</span>
+            </div>
+            @if (animStep() === 4) {
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            }
+          </div>
+
+          <!-- Step 5/6 Card -->
+          <div (click)="animStep.set(5); pauseAnim()" [class.border-pink-500/50]="animStep() === 5"
+            [class.bg-pink-500/5]="animStep() === 5"
+            class="flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 cursor-pointer transition-all duration-200">
+            <div [class.bg-pink-600]="animStep() === 5" [class.text-white]="animStep() === 5"
+              [class.bg-zinc-100]="animStep() !== 5" [class.text-zinc-400]="animStep() !== 5"
+              class="w-8 h-8 rounded-lg flex items-center justify-center">
+              <lucide-icon [name]="CpuIcon" class="w-4 h-4"></lucide-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-xs font-bold text-zinc-950 dark:text-zinc-50 block">5. LLM Synthesis Generation</span>
+              <span class="text-[10px] text-zinc-400 truncate block">Context merged and answer synthesized</span>
+            </div>
+            @if (animStep() === 5) {
+            <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+            }
+          </div>
+        </div>
+
+        <!-- Detail Explanation Box -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-5 border border-zinc-200/40 dark:border-zinc-800/40 rounded-2xl overflow-hidden text-left bg-zinc-50/50 dark:bg-zinc-950/20 p-5">
+
+          <!-- Column 1: Step Info -->
+          <div class="space-y-3.5 flex flex-col justify-center">
+            <span class="text-[9px] font-extrabold uppercase tracking-widest text-violet-600 dark:text-violet-400">
+              Stage Description
+            </span>
+
+            @if (animStep() === 1) {
+            <div class="space-y-2 animate-slide-up">
+              <h4 class="text-sm font-bold text-zinc-950 dark:text-zinc-50">1. User Inputs Prompt</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                The pipeline begins when a user asks a question about details not present in the LLM's public
+                pre-training memory (e.g. secret keys or local files). The prompt must be processed dynamically before
+                being sent to the AI.
+              </p>
+              <div class="flex items-center gap-1.5 text-[10px] text-zinc-400">
+                <lucide-icon [name]="InfoIcon" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Input is captured in the client interface.</span>
+              </div>
+            </div>
+            } @else if (animStep() === 2) {
+            <div class="space-y-2 animate-slide-up">
+              <h4 class="text-sm font-bold text-zinc-950 dark:text-zinc-50">2. Text converted to Vector</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                Computers cannot calculate mathematical similarities on raw text strings. The system calls an
+                **embedding model** (such as Gemini's `text-embedding-004`) to map the text query into a
+                high-dimensional vector coordinate that captures its exact semantic meaning.
+              </p>
+              <div class="flex items-center gap-1.5 text-[10px] text-zinc-400">
+                <lucide-icon [name]="InfoIcon" class="w-3.5 h-3.5"></lucide-icon>
+                <span>The coordinate encodes topics like food, server, or mascot.</span>
+              </div>
+            </div>
+            } @else if (animStep() === 3) {
+            <div class="space-y-2 animate-slide-up">
+              <h4 class="text-sm font-bold text-zinc-950 dark:text-zinc-50">3. Vector Database Scanning</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                The database performs a math search. It takes the query coordinate and runs a **Cosine Similarity**
+                check against all pre-stored text chunk coordinates in the vault. The segment that has the closest
+                matching angle is ranked highest.
+              </p>
+              <div class="flex items-center gap-1.5 text-[10px] text-zinc-400">
+                <lucide-icon [name]="InfoIcon" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Comparing coordinate directions instead of literal words.</span>
+              </div>
+            </div>
+            } @else if (animStep() === 4) {
+            <div class="space-y-2 animate-slide-up">
+              <h4 class="text-sm font-bold text-zinc-950 dark:text-zinc-50">4. Fetching Relevant Chunks</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                The database returns the text of the highest-matching document segments (chunks). The file context has
+                now been successfully isolated, extracting only the few sentences that contain the actual facts required
+                to answer the question.
+              </p>
+              <div class="flex items-center gap-1.5 text-[10px] text-emerald-500">
+                <lucide-icon [name]="CheckIcon" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Found matching document chunk with high cosine score.</span>
+              </div>
+            </div>
+            } @else if (animStep() === 5) {
+            <div class="space-y-2 animate-slide-up">
+              <h4 class="text-sm font-bold text-zinc-950 dark:text-zinc-50">5. Merging & Augmenting Prompt</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                The application wraps the user's question and the retrieved text context inside a structured system
+                template. This process is called **Augmentation**. It orders the LLM to only answer the user's question
+                by citing the retrieved facts.
+              </p>
+              <div class="flex items-center gap-1.5 text-[10px] text-zinc-400">
+                <lucide-icon [name]="InfoIcon" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Injects instructions: "Answer ONLY using this reference."</span>
+              </div>
+            </div>
+            } @else if (animStep() === 6) {
+            <div class="space-y-2 animate-slide-up">
+              <h4 class="text-sm font-bold text-zinc-950 dark:text-zinc-50">6. LLM Generates Fact-Backed Answer</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                The augmented prompt is passed to the LLM. Because the exact answer is right there in the context, the
+                model does not need to guess. It reads the guidelines, compiles a factual response, and streams it back.
+              </p>
+              <div class="flex items-center gap-1.5 text-[10px] text-violet-500">
+                <lucide-icon [name]="SparklesIcon" class="w-3.5 h-3.5"></lucide-icon>
+                <span>Answer is fully grounded in the retrieved database context.</span>
+              </div>
+            </div>
+            }
+          </div>
+
+          <!-- Column 2: Interactive Sandbox Visual Code/Console -->
+          <div
+            class="p-4 bg-zinc-900 dark:bg-black rounded-xl border border-zinc-800 font-mono text-[11px] leading-relaxed text-zinc-300 min-h-[160px] flex flex-col justify-between overflow-hidden relative shadow-inner">
+            <div class="absolute top-0 right-0 p-2 text-[9px] text-zinc-600 tracking-wider uppercase select-none">
+              Live Console Data
+            </div>
+
+            @if (animStep() === 1) {
+            <div class="space-y-2 animate-fade-in flex-1">
+              <div class="text-zinc-500 flex items-center gap-1"><lucide-icon [name]="TerminalIcon"
+                  class="w-3 h-3"></lucide-icon> user_prompt.log</div>
+              <div class="text-zinc-100 font-bold bg-zinc-800/40 p-2.5 rounded-lg border border-zinc-800 mt-2">
+                "{{ animQuery() }}"
+              </div>
+              <div class="text-zinc-500 text-[10px] mt-2">Captured: size = {{ animQuery().length }} chars, words = {{
+                animQuery().split(' ').length }}</div>
+            </div>
+            } @else if (animStep() === 2) {
+            <div class="space-y-2 animate-fade-in flex-1">
+              <div class="text-zinc-500 flex items-center gap-1"><lucide-icon [name]="BinaryIcon"
+                  class="w-3 h-3"></lucide-icon> embedding_model.output</div>
+              <div class="text-zinc-400 text-[10px] mt-1">Generating 1536-dimensional semantic representation...</div>
+              <div
+                class="text-violet-400 font-extrabold text-[12px] bg-zinc-850/50 p-2.5 rounded-lg border border-zinc-800 mt-1 select-all">
+                {{ animVector() }}
+              </div>
+              <div class="text-[10px] text-zinc-500">Vector coordinates plotted successfully on semantic maps.</div>
+            </div>
+            } @else if (animStep() === 3) {
+            <div class="space-y-1.5 animate-fade-in flex-1">
+              <div class="text-zinc-500 flex items-center gap-1"><lucide-icon [name]="DatabaseIcon"
+                  class="w-3 h-3"></lucide-icon> database_scan.query</div>
+              <div class="text-[10px] text-zinc-400">Comparing query vector vs active documents...</div>
+              <div class="space-y-1 mt-2 text-[10px]">
+                <div class="flex justify-between text-emerald-400 font-bold">
+                  <span>➜ {{ animRetrievedChunk().title.split(' ')[0] }}</span>
+                  <span>Score: {{ animRetrievedChunk().score }} (MATCH)</span>
+                </div>
+                <div class="flex justify-between text-zinc-600">
+                  <span> other_document.txt (Chunk #4)</span>
+                  <span>Score: 0.142 (Skip)</span>
+                </div>
+                <div class="flex justify-between text-zinc-600">
+                  <span> archive_notes.pdf (Chunk #81)</span>
+                  <span>Score: 0.051 (Skip)</span>
+                </div>
+              </div>
+            </div>
+            } @else if (animStep() === 4) {
+            <div class="space-y-2 animate-fade-in flex-1">
+              <div class="text-zinc-500 flex items-center gap-1"><lucide-icon [name]="FileTextIcon"
+                  class="w-3 h-3"></lucide-icon> retrieved_context.chunk</div>
+              <div class="text-[10px] font-bold text-violet-400">Source: {{ animRetrievedChunk().title }}</div>
+              <div
+                class="bg-zinc-800/50 p-2.5 rounded-lg border border-zinc-800 text-zinc-300 leading-relaxed text-[10.5px]">
+                "{{ animRetrievedChunk().content }}"
+              </div>
+            </div>
+            } @else if (animStep() === 5) {
+            <div class="space-y-1.5 animate-fade-in flex-1">
+              <div class="text-zinc-500 flex items-center gap-1"><lucide-icon [name]="CpuIcon"
+                  class="w-3 h-3"></lucide-icon> augmented_prompt.txt</div>
+              <div
+                class="p-2 bg-zinc-850/50 rounded-lg border border-zinc-800 max-h-[110px] overflow-y-auto text-[9.5px] leading-relaxed text-zinc-400 space-y-1">
+                <div><span class="text-rose-500">[SYSTEM INSTRUCTIONS]</span> Answer the user question strictly based on
+                  the database content. If not present, refuse to answer.</div>
+                <div><span class="text-emerald-500">[CONTEXT]</span> {{ animRetrievedChunk().content }}</div>
+                <div><span class="text-violet-500">[USER QUESTION]</span> {{ animQuery() }}</div>
+              </div>
+            </div>
+            } @else if (animStep() === 6) {
+            <div class="space-y-2 animate-fade-in flex-1">
+              <div class="text-zinc-500 flex items-center gap-1"><lucide-icon [name]="SendIcon"
+                  class="w-3 h-3"></lucide-icon> llm_generation.response</div>
+              <div
+                class="bg-violet-950/20 border border-violet-500/10 p-2.5 rounded-lg text-violet-400 font-bold text-[11px] leading-relaxed">
+                {{ animFinalResponse() }}
+              </div>
+              <div class="text-emerald-500 text-[9px] font-bold flex items-center gap-1">
+                <lucide-icon [name]="CheckIcon" class="w-3 h-3"></lucide-icon> Response verified by context reference.
+                0% Hallucination.
+              </div>
+            </div>
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Call to Action button to go to next level -->
+      <div class="flex justify-center pt-2">
+        <button (click)="setLevel('beginner')"
+          class="flex items-center gap-1.5 px-6 py-3 text-xs font-bold rounded-xl text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-md shadow-violet-500/15 transition-all cursor-pointer">
+          Next Step: Play with Vector Clusters
+          <lucide-icon [name]="ArrowRightIcon" class="w-4 h-4"></lucide-icon>
+        </button>
+      </div>
+
+    </div>
+    }
+
+    <!-- ================= LEVEL 1: BEGINNER WORKSPACE ================= -->
+    @if (activeLevel() === 'beginner') {
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in text-left">
+
+      <!-- Interactive SVG Grid Column -->
+      <div class="lg:col-span-2 flex flex-col space-y-4">
+        <div class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4 flex-1">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">2D Semantic Vector
+                Map</h3>
+              <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+                Click or drag the <span class="text-amber-500 font-bold">Query Target (Yellow Orb)</span> to see which
+                semantic concepts cluster nearest to it!
+              </p>
+            </div>
+            <div
+              class="px-2 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-mono font-bold rounded border border-amber-500/20">
+              Query: [X: {{ queryPoint().x }}, Y: {{ queryPoint().y }}]
+            </div>
+          </div>
+
+          <!-- SVG coordinate plane -->
+          <div
+            class="relative bg-zinc-50 dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-800/40 rounded-2xl overflow-hidden aspect-square w-full select-none shadow-inner">
+            <svg #gridSvg class="w-full h-full cursor-crosshair" (mousedown)="onMouseDown($event, gridSvg)"
+              (mousemove)="onMouseMove($event, gridSvg)" (mouseup)="onMouseUpOrLeave()"
+              (mouseleave)="onMouseUpOrLeave()">
+
+              <!-- Draw Grid Lines -->
+              <defs>
+                <pattern id="gridPattern" width="10%" height="10%" patternUnits="userSpaceOnUse">
+                  <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(128,128,128,0.07)" stroke-width="1" />
+                </pattern>
+                <radialGradient id="queryGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" />
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#gridPattern)" />
+
+              <!-- Category Cluster Background Halos -->
+              <!-- Food Halo (Center Top) -->
+              <circle cx="50%" cy="20%" r="20%" fill="rgba(16,185,129,0.03)"
+                class="dark:fill-[rgba(16,185,129,0.015)]" />
+              <!-- Animals Halo (Left Middle) -->
+              <circle cx="20%" cy="30%" r="20%" fill="rgba(59,130,246,0.03)"
+                class="dark:fill-[rgba(59,130,246,0.015)]" />
+              <!-- Space Halo (Right Bottom) -->
+              <circle cx="80%" cy="75%" r="20%" fill="rgba(168,85,247,0.03)"
+                class="dark:fill-[rgba(168,85,247,0.015)]" />
+
+              <!-- Connection lines from Query Point to nearest word nodes -->
+              @for (node of closestWords(); track node.word) {
+              <line [attr.x1]="queryPoint().x + '%'" [attr.y1]="queryPoint().y + '%'" [attr.x2]="node.x + '%'"
+                [attr.y2]="node.y + '%'" stroke="rgba(245, 158, 11, 0.3)" stroke-dasharray="3,3" stroke-width="1.5" />
+              }
+
+              <!-- Plot Placed Nodes -->
+              @for (node of wordNodes; track node.word) {
+              <g>
+                <!-- Node dot -->
+                <circle [attr.cx]="node.x + '%'" [attr.cy]="node.y + '%'" r="5"
+                  [class.fill-blue-500]="node.category === 'animals'"
+                  [class.fill-purple-500]="node.category === 'space'"
+                  [class.fill-emerald-500]="node.category === 'food'"
+                  class="stroke-white dark:stroke-zinc-955 stroke-2" />
+                <!-- Label text -->
+                <text [attr.x]="node.x + '%'" [attr.y]="(node.y + 4) + '%'" text-anchor="middle"
+                  class="text-[9px] font-bold fill-zinc-600 dark:fill-zinc-400 select-none pointer-events-none uppercase tracking-wide">
+                  {{ node.word }}
+                </text>
+              </g>
+              }
+
+              <!-- Draggable Query Target -->
+              <circle [attr.cx]="queryPoint().x + '%'" [attr.cy]="queryPoint().y + '%'" r="18" fill="url(#queryGlow)"
+                class="pointer-events-none" />
+              <circle [attr.cx]="queryPoint().x + '%'" [attr.cy]="queryPoint().y + '%'" r="6" fill="#f59e0b"
+                class="stroke-white dark:stroke-zinc-950 stroke-2 pointer-events-none shadow-md shadow-amber-500/50" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Educational Explain Column -->
+      <div class="space-y-4">
+        <div class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4">
+          <h4 class="text-xs font-bold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider">Closest Match Retrieval
+          </h4>
+
+          <div class="space-y-2">
+            @for (match of closestWords(); track match.word; let i = $index) {
+            <div class="flex items-center gap-3 p-3 rounded-xl border transition-all" [class.bg-violet-500/5]="i === 0"
+              [class.border-violet-500/20]="i === 0" [class.bg-zinc-50/50]="i !== 0"
+              [class.dark:bg-zinc-900/30]="i !== 0" [class.border-zinc-200/40]="i !== 0"
+              [class.dark:border-zinc-800/30]="i !== 0">
+
+              <!-- Match index badge -->
+              <div [class.bg-violet-500]="i === 0" [class.text-white]="i === 0" [class.bg-zinc-200]="i !== 0"
+                [class.dark:bg-zinc-800]="i !== 0" [class.text-zinc-600]="i !== 0" [class.dark:text-zinc-400]="i !== 0"
+                class="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-extrabold select-none">
+                #{{ i + 1 }}
+              </div>
+
+              <!-- Word details -->
+              <div class="flex-1 min-w-0">
+                <span
+                  class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wide block truncate">{{
+                  match.word }}</span>
+                <span class="text-[9px] text-zinc-400 font-medium block">Category: <span class="capitalize">{{
+                    match.category }}</span></span>
+              </div>
+
+              <!-- Similarity Percentage -->
+              <div class="text-right">
+                <span [class.text-violet-600]="i === 0" [class.dark:text-violet-400]="i === 0"
+                  [class.text-zinc-500]="i !== 0" [class.dark:text-zinc-400]="i !== 0"
+                  class="font-mono text-xs font-bold block">
+                  {{ match.similarity.toFixed(0) }}%
+                </span>
+                <span class="text-[8px] text-zinc-400 block font-mono">Sim Score</span>
+              </div>
+
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Concept card -->
+        <div
+          class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-3 bg-zinc-50/20 dark:bg-zinc-900/10">
+          <div
+            class="flex items-center gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">
+            <lucide-icon [name]="InfoIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+            Vector Representation
+          </div>
+          <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            In RAG, text paragraphs are mapped onto multi-dimensional coordinates (vectors). The model groups related
+            ideas together in high-dimensional space.
+            <br /><br />
+            When you enter a search, we convert your search query into coordinates and locate the closest matching
+            chunks. Dragging the yellow orb around demonstrates this spatial coordinate retrieval!
+          </p>
+        </div>
+      </div>
+
+    </div>
+    }
+
+    <!-- ================= LEVEL 2: INTERMEDIATE WORKSPACE ================= -->
+    @if (activeLevel() === 'intermediate') {
+    <div class="space-y-6 animate-fade-in">
+
+      <!-- Sentences Input Matrix -->
+      <div class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">Similarity
+              Calculation Lab</h3>
+            <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+              Edit the sentences below or choose a preset to watch the calculated bag-of-words vector angle rotate in
+              real time!
+            </p>
+          </div>
+
+          <!-- Sample helpers -->
+          <div class="flex gap-2">
+            <button (click)="setSampleSentences('matching')"
+              class="px-2.5 py-1.5 text-[9px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all cursor-pointer">
+              100% Match
+            </button>
+            <button (click)="setSampleSentences('partial')"
+              class="px-2.5 py-1.5 text-[9px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all cursor-pointer">
+              Partial Match
+            </button>
+            <button (click)="setSampleSentences('different')"
+              class="px-2.5 py-1.5 text-[9px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all cursor-pointer">
+              No Match
+            </button>
+            <button (click)="resetSentences()"
+              class="p-1.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all cursor-pointer"
+              title="Reset defaults">
+              <lucide-icon [name]="ResetIcon" class="w-4 h-4"></lucide-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Sentence A -->
+          <div class="space-y-1.5">
+            <label for="academySentenceA" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Sentence A (Reference
+              Document Chunk)</label>
+            <input id="academySentenceA" type="text" [(ngModel)]="sentenceA"
+              class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-xs focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200" />
+          </div>
+
+          <!-- Sentence B -->
+          <div class="space-y-1.5">
+            <label for="academySentenceB" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Sentence B (User Query
+              Prompt)</label>
+            <input id="academySentenceB" type="text" [(ngModel)]="sentenceB"
+              class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-xs focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Math readout & speedometer -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Speedometer angle gauge -->
+        <div
+          class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 flex flex-col items-center justify-center space-y-4">
+          <h4 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider text-center w-full">
+            Semantic Angle Gauge</h4>
+
+          <div class="relative w-44 h-24 overflow-hidden flex justify-center items-end mt-2">
+            <!-- Background half circle -->
+            <div class="absolute inset-0 w-44 h-44 rounded-full border-[14px] border-zinc-100 dark:border-zinc-900/60">
+            </div>
+
+            <!-- Angle indicator sweeps -->
+            <!-- We rotate it to mimic the vector angle (0 similarity is 90 degrees/perpendicular, 1 similarity is 0 degrees/aligned) -->
+            <!-- To map degrees: 0 deg similarity (1.0 similarity) -> angle is 0, points straight up or right. Let's make it typical clock needle where 0 similarity (90 deg) points straight up, and 100% similarity (0 deg) points horizontally left or right. Or just draw a simple angle arc! -->
+            <!-- A simpler dial: 0% match (90 deg) points all the way left (rotated -90deg), 100% match points all the way right (rotated 0deg) or similar. Let's rotate the needle by: needleRotation = (1.0 - similarity) * -90deg -->
+            <div [style.transform]="'rotate(' + (vectorAnalysis().angleDegrees - 90) + 'deg)'"
+              class="absolute bottom-0 w-2 h-20 bg-violet-500 rounded-t-full origin-bottom transition-transform duration-500 shadow-md shadow-violet-500/25">
+              <!-- Needle indicator dot -->
+              <div
+                class="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-violet-600 border-2 border-white dark:border-zinc-950">
+              </div>
+            </div>
+
+            <!-- Center pin -->
+            <div class="absolute bottom-0 w-6 h-3 bg-zinc-800 dark:bg-zinc-100 rounded-t-full"></div>
+          </div>
+
+          <div class="text-center space-y-1">
+            <span class="text-lg font-mono font-extrabold text-zinc-900 dark:text-zinc-50 block">
+              {{ vectorAnalysis().angleDegrees }}° Angle
+            </span>
+            <span class="text-[9px] text-zinc-400 font-bold uppercase tracking-wide">
+              Cosine Similarity Score:
+              <span class="font-mono text-violet-500">{{ vectorAnalysis().similarity.toFixed(2) }}</span>
+            </span>
+          </div>
+
+          <!-- Color rating badge -->
+          <div [class.bg-emerald-500/10]="vectorAnalysis().similarity >= 0.7"
+            [class.text-emerald-600]="vectorAnalysis().similarity >= 0.7"
+            [class.dark:text-emerald-400]="vectorAnalysis().similarity >= 0.7"
+            [class.border-emerald-500/20]="vectorAnalysis().similarity >= 0.7"
+            [class.bg-amber-500/10]="vectorAnalysis().similarity < 0.7 && vectorAnalysis().similarity >= 0.3"
+            [class.text-amber-600]="vectorAnalysis().similarity < 0.7 && vectorAnalysis().similarity >= 0.3"
+            [class.dark:text-amber-400]="vectorAnalysis().similarity < 0.7 && vectorAnalysis().similarity >= 0.3"
+            [class.border-amber-500/20]="vectorAnalysis().similarity < 0.7 && vectorAnalysis().similarity >= 0.3"
+            [class.bg-rose-500/10]="vectorAnalysis().similarity < 0.3"
+            [class.text-rose-600]="vectorAnalysis().similarity < 0.3"
+            [class.dark:text-rose-400]="vectorAnalysis().similarity < 0.3"
+            [class.border-rose-500/20]="vectorAnalysis().similarity < 0.3"
+            class="px-3 py-1 rounded-full text-[10px] font-bold border uppercase tracking-wider text-center">
+            {{ vectorAnalysis().similarity >= 0.7 ? 'Strong Match' : vectorAnalysis().similarity >= 0.3 ? 'Weak Match' :
+            'Unrelated' }}
+          </div>
+        </div>
+
+        <!-- Math Steps Column -->
+        <div
+          class="lg:col-span-2 glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4">
+          <h4 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">Step-by-Step Math
+            Breakdown</h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <!-- Mathematical outputs -->
+            <div class="space-y-3">
+              <!-- Dot Product -->
+              <div
+                class="p-3 bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/30 rounded-xl space-y-1">
+                <span class="text-[9px] text-zinc-400 font-bold uppercase tracking-wider block">1. Dot Product (A •
+                  B)</span>
+                <span class="text-xs font-mono font-bold text-zinc-800 dark:text-zinc-200">
+                  Value = {{ vectorAnalysis().dotProduct }}
+                </span>
+                <p class="text-[8.5px] text-zinc-400 leading-normal">Multiplying aligned words together: "algorithms"
+                  (1*1) + "vectors" (1*1) + ...</p>
+              </div>
+
+              <!-- Magnitudes -->
+              <div
+                class="p-3 bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/30 rounded-xl space-y-1">
+                <span class="text-[9px] text-zinc-400 font-bold uppercase tracking-wider block">2. Vector Magnitudes
+                  (Lengths)</span>
+                <span class="text-xs font-mono font-bold text-zinc-800 dark:text-zinc-200">
+                  ||A|| = {{ vectorAnalysis().magnitudeA }} | ||B|| = {{ vectorAnalysis().magnitudeB }}
+                </span>
+                <p class="text-[8.5px] text-zinc-400 leading-normal">Represents text length density. Computes square
+                  root of sum of squared word occurrences.</p>
+              </div>
+            </div>
+
+            <!-- final synthesis math -->
+            <div
+              class="p-4 bg-violet-500/5 dark:bg-violet-500/2 border border-violet-500/15 dark:border-violet-500/10 rounded-2xl flex flex-col justify-between">
+              <div class="space-y-2">
+                <span
+                  class="text-[9px] text-violet-600 dark:text-violet-400 font-bold uppercase tracking-wider block">3.
+                  Cosine Calculation Synthesis</span>
+                <div
+                  class="p-3 bg-white dark:bg-zinc-950 rounded-xl border border-zinc-200/30 dark:border-zinc-800/30 font-mono text-[10px] space-y-2 text-zinc-700 dark:text-zinc-300">
+                  <div>cos(θ) = (A • B) / (||A|| * ||B||)</div>
+                  <div>cos(θ) = {{ vectorAnalysis().dotProduct }} / ({{ vectorAnalysis().magnitudeA }} * {{
+                    vectorAnalysis().magnitudeB }})</div>
+                  <div
+                    class="text-violet-600 dark:text-violet-400 font-extrabold pt-1 border-t border-zinc-100 dark:border-zinc-900/60">
+                    cos(θ) = {{ vectorAnalysis().similarity }}</div>
+                </div>
+              </div>
+              <p class="text-[8.5px] text-zinc-400 leading-relaxed mt-2">
+                By dividing the dot product by the product of their length magnitudes, we normalize the score. This
+                ensures sentence length difference doesn't distort similarity matching.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Vector Table representation -->
+      <div
+        class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-3 overflow-hidden">
+        <h4 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">Vector Space Token
+          Columns</h4>
+
+        <div class="overflow-x-auto scrollbar-thin">
+          <table class="w-full text-left text-[10px] font-mono border-collapse">
+            <thead>
+              <tr class="border-b border-zinc-100 dark:border-zinc-900">
+                <th class="py-2.5 pr-4 text-zinc-400 uppercase tracking-wider">Sentence Vectors</th>
+                @for (word of vectorAnalysis().vocab; track word) {
+                <th
+                  class="py-2.5 px-3 text-zinc-600 dark:text-zinc-300 font-semibold bg-zinc-50/50 dark:bg-zinc-900/30 border-r border-zinc-100 dark:border-zinc-900/40 text-center whitespace-nowrap">
+                  {{ word }}
+                </th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Vector A -->
+              <tr class="border-b border-zinc-100 dark:border-zinc-900/40">
+                <td class="py-3 pr-4 font-bold text-zinc-800 dark:text-zinc-200 whitespace-nowrap">Vector A (Doc)</td>
+                @for (val of vectorAnalysis().vectorA; track $index) {
+                <td [class.text-violet-500]="val > 0" [class.bg-violet-500/5]="val > 0" [class.font-bold]="val > 0"
+                  class="py-3 px-3 text-center border-r border-zinc-100 dark:border-zinc-900/30">
+                  {{ val }}
+                </td>
+                }
+              </tr>
+              <!-- Vector B -->
+              <tr>
+                <td class="py-3 pr-4 font-bold text-zinc-800 dark:text-zinc-200 whitespace-nowrap">Vector B (Query)</td>
+                @for (val of vectorAnalysis().vectorB; track $index) {
+                <td [class.text-violet-500]="val > 0" [class.bg-violet-500/5]="val > 0" [class.font-bold]="val > 0"
+                  class="py-3 px-3 text-center border-r border-zinc-100 dark:border-zinc-900/30">
+                  {{ val }}
+                </td>
+                }
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    }
+
+    <!-- ================= LEVEL 3: EXPERT WORKSPACE ================= -->
+    @if (activeLevel() === 'expert') {
+    <div class="space-y-6 animate-fade-in">
+
+      <!-- Simulation Controls -->
+      <div class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-4">
+
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
+          <div>
+            <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">RAG Compiler &
+              Simulation Lab</h3>
+            <p class="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+              Configure parameters to see how context enrichment protects models from hallucinations.
+            </p>
+          </div>
+
+          <!-- Presets -->
+          <div class="flex flex-wrap gap-1.5">
+            @for (prompt of samplePrompts; track prompt) {
+            <button (click)="selectSamplePrompt(prompt)"
+              class="px-2.5 py-1.5 text-[9px] font-bold rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all cursor-pointer">
+              {{ prompt.length > 30 ? (prompt.substring(0, 30) + '...') : prompt }}
+            </button>
+            }
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 pt-2 border-t border-zinc-100 dark:border-zinc-900">
+
+          <!-- Prompt input -->
+          <div class="lg:col-span-2 space-y-1.5">
+            <label for="academyExpertPrompt" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Ask the Simulation</label>
+            <input id="academyExpertPrompt" type="text" [(ngModel)]="expertPrompt"
+              (ngModelChange)="simulatedResponse.set('')" placeholder="Ask anything..."
+              class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-xs focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200" />
+          </div>
+
+          <!-- RAG Toggle -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">RAG Injection</label>
+              <span class="text-[9px] font-mono font-bold" [class.text-violet-500]="ragEnabled()">{{ ragEnabled() ?
+                'ENABLED' : 'DISABLED' }}</span>
+            </div>
+            <div
+              class="grid grid-cols-2 gap-1 bg-zinc-100 dark:bg-zinc-900/60 p-0.5 rounded-lg border border-zinc-200/30 dark:border-zinc-800/30">
+              <button (click)="ragEnabled.set(true); simulatedResponse.set('')" [class.bg-white]="ragEnabled()"
+                [class.dark:bg-zinc-800]="ragEnabled()" [class.text-zinc-950]="ragEnabled()"
+                [class.dark:text-zinc-100]="ragEnabled()" [class.text-zinc-400]="!ragEnabled()"
+                class="py-1 text-[9px] font-bold rounded-md transition-all cursor-pointer">
+                ON
+              </button>
+              <button (click)="ragEnabled.set(false); simulatedResponse.set('')" [class.bg-white]="!ragEnabled()"
+                [class.dark:bg-zinc-800]="!ragEnabled()" [class.text-zinc-950]="!ragEnabled()"
+                [class.dark:text-zinc-100]="!ragEnabled()" [class.text-zinc-400]="ragEnabled()"
+                class="py-1 text-[9px] font-bold rounded-md transition-all cursor-pointer">
+                OFF
+              </button>
+            </div>
+          </div>
+
+          <!-- Noise Toggle -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Inject Noise</label>
+              <span class="text-[9px] font-mono font-bold" [class.text-rose-500]="noiseEnabled()">{{ noiseEnabled() ?
+                'ON (Fail)' : 'OFF (Safe)' }}</span>
+            </div>
+            <div
+              class="grid grid-cols-2 gap-1 bg-zinc-100 dark:bg-zinc-900/60 p-0.5 rounded-lg border border-zinc-200/30 dark:border-zinc-800/30">
+              <button (click)="noiseEnabled.set(true); simulatedResponse.set('')" [class.bg-white]="noiseEnabled()"
+                [class.dark:bg-zinc-800]="noiseEnabled()" [class.text-rose-500]="noiseEnabled()"
+                [class.text-zinc-400]="!noiseEnabled()"
+                class="py-1 text-[9px] font-bold rounded-md transition-all cursor-pointer">
+                ON
+              </button>
+              <button (click)="noiseEnabled.set(false); simulatedResponse.set('')" [class.bg-white]="!noiseEnabled()"
+                [class.dark:bg-zinc-800]="!noiseEnabled()" [class.text-zinc-950]="!noiseEnabled()"
+                [class.dark:text-zinc-100]="!noiseEnabled()" [class.text-zinc-400]="noiseEnabled()"
+                class="py-1 text-[9px] font-bold rounded-md transition-all cursor-pointer">
+                OFF
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Compilation prompt visualization & execution terminal split -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Left: Prompt Assembler -->
+        <div
+          class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 flex flex-col space-y-4">
+          <h4 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">Prompt Assembled in
+            Memory</h4>
+
+          <div
+            class="flex-1 p-4 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-200/40 dark:border-zinc-800/40 text-[10px] font-mono leading-relaxed whitespace-pre-wrap max-h-[360px] overflow-y-auto scrollbar-thin select-all">
+            <!-- Assembled segments -->
+            {{ compiledPrompt() }}
+          </div>
+        </div>
+
+        <!-- Right: Execution terminal output -->
+        <div
+          class="glass-card p-5 rounded-3xl border border-zinc-200/50 dark:border-zinc-800/50 flex flex-col space-y-4">
+          <div class="flex justify-between items-center">
+            <h4 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">AI Simulation
+              Console</h4>
+
+            <!-- Pulse indicator state -->
+            <div class="flex items-center gap-1.5">
+              <span [class.bg-emerald-500]="ragEnabled() && !noiseEnabled() && simulatedResponse()"
+                [class.shadow-emerald-500/50]="ragEnabled() && !noiseEnabled() && simulatedResponse()"
+                [class.bg-amber-500]="ragEnabled() && noiseEnabled() && simulatedResponse()"
+                [class.shadow-amber-500/50]="ragEnabled() && noiseEnabled() && simulatedResponse()"
+                [class.bg-rose-500]="!ragEnabled() && simulatedResponse()"
+                [class.shadow-rose-500/50]="!ragEnabled() && simulatedResponse()"
+                [class.bg-zinc-400]="!simulatedResponse()" class="w-2 h-2 rounded-full animate-ping absolute">
+              </span>
+              <span [class.bg-emerald-500]="ragEnabled() && !noiseEnabled() && simulatedResponse()"
+                [class.bg-amber-500]="ragEnabled() && noiseEnabled() && simulatedResponse()"
+                [class.bg-rose-500]="!ragEnabled() && simulatedResponse()" [class.bg-zinc-400]="!simulatedResponse()"
+                class="w-2 h-2 rounded-full relative">
+              </span>
+              <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wide">
+                {{ !simulatedResponse() ? 'Idle' : (!ragEnabled() ? 'Hallucinating' : (noiseEnabled() ? 'Noisy Context'
+                : 'Context Verified')) }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Console window -->
+          <div
+            class="flex-1 p-4 bg-zinc-950 text-zinc-100 rounded-2xl font-mono text-[10px] leading-relaxed min-h-[220px] max-h-[300px] overflow-y-auto scrollbar-thin select-text border border-zinc-900/60 shadow-inner flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="text-zinc-500">> Executing prompt compiler...</div>
+              @if (simulatedResponse()) {
+              <div class="whitespace-pre-wrap animate-fade-in">{{ simulatedResponse() }}</div>
+              }
+
+              <!-- cursor loader -->
+              @if (isSimulating()) {
+              <span class="inline-block w-1.5 h-3.5 bg-violet-400 animate-pulse ml-0.5"></span>
+              }
+            </div>
+
+            @if (!simulatedResponse() && !isSimulating()) {
+            <div class="text-zinc-500 text-center py-10">
+              Click "Run Simulation" to execute the completion prompt.
+            </div>
+            }
+          </div>
+
+          <button (click)="runSimulation()" [disabled]="isSimulating() || !expertPrompt().trim()"
+            class="w-full flex items-center justify-center gap-2 py-3 px-4 text-xs font-bold rounded-xl text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-50 transition-all cursor-pointer shadow-md shadow-violet-500/10">
+            <lucide-icon [name]="PlayIcon" class="w-4 h-4"></lucide-icon>
+            Run Simulation Prompt
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+    }
+
+  </div>
+
+</div>

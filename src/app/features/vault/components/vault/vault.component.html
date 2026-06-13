@@ -1,0 +1,481 @@
+<div class="space-y-6 max-w-7xl mx-auto p-4 sm:p-6 animate-fade-in">
+  
+  <!-- Title / Introduction -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
+        <lucide-icon [name]="DatabaseIcon" class="w-6 h-6 text-violet-500"></lucide-icon>
+        Knowledge Vault
+      </h1>
+      <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        Upload documents, configure chunking policies, inspect text chunks, and manage stored vector embeddings.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modern Notification Banner -->
+  @if (notification()) {
+    <div 
+      [class.bg-emerald-500/10]="notification()!.type === 'success'"
+      [class.border-emerald-500/30]="notification()!.type === 'success'"
+      [class.text-emerald-600]="notification()!.type === 'success'"
+      [class.dark:text-emerald-400]="notification()!.type === 'success'"
+      [class.bg-rose-500/10]="notification()!.type === 'error'"
+      [class.border-rose-500/30]="notification()!.type === 'error'"
+      [class.text-rose-600]="notification()!.type === 'error'"
+      [class.dark:text-rose-400]="notification()!.type === 'error'"
+      [class.bg-blue-500/10]="notification()!.type === 'info'"
+      [class.border-blue-500/30]="notification()!.type === 'info'"
+      [class.text-blue-600]="notification()!.type === 'info'"
+      [class.dark:text-blue-400]="notification()!.type === 'info'"
+      class="flex items-center justify-between p-4 rounded-2xl border font-sans text-xs sm:text-sm animate-slide-down shadow-xs">
+      
+      <div class="flex items-center gap-2.5">
+        <!-- Icon -->
+        <lucide-icon 
+          [name]="notification()!.type === 'success' ? CheckIcon : (notification()!.type === 'error' ? AlertIcon : InfoIcon)" 
+          class="w-5 h-5 shrink-0">
+        </lucide-icon>
+        <span class="font-semibold select-text">{{ notification()!.message }}</span>
+      </div>
+      
+      <!-- Close Button -->
+      <button 
+        (click)="clearNotification()"
+        class="p-1 rounded-lg hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-pointer">
+        <lucide-icon [name]="XIcon" class="w-4 h-4"></lucide-icon>
+      </button>
+    </div>
+  }
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- Left Column: Upload & Chunk Visualizer (7 cols) -->
+    <div class="lg:col-span-7 space-y-6">
+      
+      <!-- Tab Selector (Only shown if not previewing a file) -->
+      @if (!previewText()) {
+        <div class="flex bg-zinc-100/80 dark:bg-zinc-900/60 p-1 rounded-xl border border-zinc-200/40 dark:border-zinc-850/40 max-w-[280px]">
+          <button 
+            (click)="activeUploadTab.set('file')"
+            [class.bg-white]="activeUploadTab() === 'file'"
+            [class.dark:bg-zinc-800]="activeUploadTab() === 'file'"
+            [class.text-zinc-950]="activeUploadTab() === 'file'"
+            [class.dark:text-zinc-50]="activeUploadTab() === 'file'"
+            [class.shadow-xs]="activeUploadTab() === 'file'"
+            [class.text-zinc-400]="activeUploadTab() !== 'file'"
+            class="flex-1 py-1.5 text-[10px] font-extrabold uppercase tracking-wider rounded-lg transition-all cursor-pointer text-center">
+            Upload File
+          </button>
+          <button 
+            (click)="activeUploadTab.set('note')"
+            [class.bg-white]="activeUploadTab() === 'note'"
+            [class.dark:bg-zinc-800]="activeUploadTab() === 'note'"
+            [class.text-zinc-950]="activeUploadTab() === 'note'"
+            [class.dark:text-zinc-50]="activeUploadTab() === 'note'"
+            [class.shadow-xs]="activeUploadTab() === 'note'"
+            [class.text-zinc-400]="activeUploadTab() !== 'note'"
+            class="flex-1 py-1.5 text-[10px] font-extrabold uppercase tracking-wider rounded-lg transition-all cursor-pointer text-center">
+            Quick Note
+          </button>
+        </div>
+
+        @if (activeUploadTab() === 'file') {
+          <!-- Upload File Mode Panel -->
+          <div 
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave()"
+            (drop)="onDrop($event)"
+            [class.border-violet-500]="isDragging()"
+            [class.bg-violet-500/5]="isDragging()"
+            class="glass-panel border-2 border-dashed border-zinc-300 dark:border-zinc-800 rounded-2xl p-8 text-center flex flex-col items-center justify-center min-h-[260px] transition-all relative">
+            
+            <input 
+              id="vaultFileInput"
+              type="file" 
+              (change)="onFileSelected($event)" 
+              accept=".txt,.md,.pdf" 
+              class="hidden" 
+              #fileInput
+              aria-label="Upload knowledge document"
+            />
+            
+            <div class="p-4 rounded-full bg-violet-500/10 dark:bg-violet-500/5 text-violet-500 mb-4">
+              <lucide-icon [name]="UploadIcon" class="w-8 h-8"></lucide-icon>
+            </div>
+            
+            <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1">Upload knowledge document</h3>
+            <p class="text-xs text-zinc-400 max-w-sm mb-4 leading-normal">
+              Drag and drop your file here, or click to browse.<br/>Supports <span class="font-medium text-zinc-500 dark:text-zinc-300">PDF (.pdf), Plain Text (.txt)</span>, and <span class="font-medium text-zinc-500 dark:text-zinc-300">Markdown (.md)</span>.
+            </p>
+            
+            <button 
+              (click)="fileInput.click()"
+              class="px-4 py-2 text-sm font-semibold rounded-xl text-white bg-violet-600 hover:bg-violet-700 shadow-md shadow-violet-500/15 transition-all cursor-pointer">
+              Browse Files
+            </button>
+          </div>
+        } @else if (activeUploadTab() === 'note') {
+          <!-- Quick Note Mode Panel -->
+          <div 
+            class="glass-card rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 space-y-4 min-h-[260px] text-left">
+            
+            <div class="flex items-center gap-2 border-b border-zinc-100 dark:border-zinc-900 pb-3">
+              <div class="p-2 rounded-lg bg-violet-500/10 text-violet-500">
+                <lucide-icon [name]="FileIcon" class="w-5 h-5"></lucide-icon>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider">Direct Fact Injector</h3>
+                <p class="text-[10px] text-zinc-450 mt-0.5 leading-relaxed">
+                  Inject a quick fact or sentence directly into the knowledge store.
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Document Name Title -->
+              <div class="space-y-1.5">
+                <label for="customNoteTitleInput" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Note Title / Source Name</label>
+                <input 
+                  id="customNoteTitleInput"
+                  type="text" 
+                  [(ngModel)]="customNoteTitle"
+                  placeholder="e.g. shipping_rules.txt, company_faq"
+                  class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-xs focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200"
+                />
+              </div>
+
+              <!-- Note Content Text Area -->
+              <div class="space-y-1.5">
+                <label for="customNoteTextInput" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Note Content (The Facts)</label>
+                <textarea 
+                  id="customNoteTextInput"
+                  [(ngModel)]="customNoteText"
+                  rows="4"
+                  placeholder="Type your custom fact here... (e.g. 'The server credentials key is GlowMesh2026. The company support email is support@smartrag.com.')"
+                  class="w-full px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40 text-zinc-900 dark:text-zinc-50 text-xs focus:outline-hidden focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all duration-200 font-sans leading-relaxed min-h-[100px]"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Submit to Preview -->
+            <button 
+              (click)="previewCustomNote()"
+              [disabled]="!customNoteText().trim()"
+              class="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold rounded-xl text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-50 transition-all cursor-pointer shadow-md shadow-violet-500/10">
+              <lucide-icon [name]="ArrowRightIcon" class="w-4 h-4"></lucide-icon>
+              Analyze & Preview Note
+            </button>
+          </div>
+        }
+      }
+
+      <!-- Active File Process Visualizer -->
+      @if (previewText()) {
+        <div class="glass-card rounded-2xl p-6 flex flex-col space-y-4">
+          
+          <!-- Document Meta Header -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-violet-500/10 text-violet-500">
+                <lucide-icon [name]="FileIcon" class="w-5 h-5"></lucide-icon>
+              </div>
+              <div>
+                <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 text-sm leading-none">{{ previewFilename() }}</h3>
+                <p class="text-xs text-zinc-400 mt-1">Characters: {{ previewText().length }} | Words: {{ previewText().split(' ').length }}</p>
+              </div>
+            </div>
+            <button 
+              (click)="previewText.set(''); previewFilename.set('');"
+              class="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:underline cursor-pointer">
+              Remove file
+            </button>
+          </div>
+
+          <!-- Chunking Control Parameters -->
+          <div class="bg-zinc-50 dark:bg-zinc-900/40 p-4 rounded-xl space-y-3 border border-zinc-200/40 dark:border-zinc-800/40">
+            <div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+              <lucide-icon [name]="SlidersIcon" class="w-3.5 h-3.5"></lucide-icon>
+              Chunk Settings
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Chunk Size -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-medium">
+                  <label for="vaultChunkSize" class="text-zinc-500 cursor-pointer">Chunk Size</label>
+                  <span class="text-violet-500 font-mono">{{ settingsService.chunkSize() }} chars</span>
+                </div>
+                <input 
+                  id="vaultChunkSize"
+                  type="range" 
+                  min="100" 
+                  max="2000" 
+                  step="50"
+                  [value]="settingsService.chunkSize()"
+                  (input)="settingsService.setChunkParams(+$any($event.target).value, settingsService.chunkOverlap())"
+                  class="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                />
+              </div>
+              <!-- Chunk Overlap -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-medium">
+                  <label for="vaultChunkOverlap" class="text-zinc-500 cursor-pointer">Chunk Overlap</label>
+                  <span class="text-violet-500 font-mono">{{ settingsService.chunkOverlap() }} chars</span>
+                </div>
+                <input 
+                  id="vaultChunkOverlap"
+                  type="range" 
+                  min="0" 
+                  max="500" 
+                  step="10"
+                  [value]="settingsService.chunkOverlap()"
+                  (input)="settingsService.setChunkParams(settingsService.chunkSize(), +$any($event.target).value)"
+                  class="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Chunk Visualizer Preview Container -->
+          <div class="flex flex-col h-[280px] border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-zinc-50 dark:bg-zinc-950">
+            <!-- Tabs -->
+            <div class="flex border-b border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-900/30">
+              <button 
+                (click)="activePreviewTab.set('text')"
+                [class.border-violet-500]="activePreviewTab() === 'text'"
+                [class.text-violet-600]="activePreviewTab() === 'text'"
+                [class.dark:text-violet-400]="activePreviewTab() === 'text'"
+                [class.border-transparent]="activePreviewTab() !== 'text'"
+                [class.text-zinc-400]="activePreviewTab() !== 'text'"
+                class="px-4 py-2.5 text-xs font-semibold border-b-2 hover:text-zinc-600 dark:hover:text-zinc-200 transition-all cursor-pointer">
+                Source Text
+              </button>
+              <button 
+                (click)="activePreviewTab.set('chunks')"
+                [class.border-violet-500]="activePreviewTab() === 'chunks'"
+                [class.text-violet-600]="activePreviewTab() === 'chunks'"
+                [class.dark:text-violet-400]="activePreviewTab() === 'chunks'"
+                [class.border-transparent]="activePreviewTab() !== 'chunks'"
+                [class.text-zinc-400]="activePreviewTab() !== 'chunks'"
+                class="px-4 py-2.5 text-xs font-semibold border-b-2 hover:text-zinc-600 dark:hover:text-zinc-200 transition-all cursor-pointer">
+                Visual Chunks ({{ visualChunks().length }})
+              </button>
+            </div>
+
+            <!-- Tab Panels -->
+            <div class="flex-1 p-4 overflow-y-auto font-mono text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 select-text scrollbar-thin">
+              <!-- Source Text -->
+              @if (activePreviewTab() === 'text') {
+                <div class="whitespace-pre-wrap">
+                  {{ previewText() }}
+                </div>
+              }
+              
+              <!-- Chunks Grid -->
+              @if (activePreviewTab() === 'chunks') {
+                <div class="space-y-4">
+                  @for (chunk of visualChunks(); track chunk.start; let idx = $index) {
+                    <div 
+                      [ngClass]="idx % 2 === 0 ? 'bg-violet-500/5 border-violet-500/20' : 'bg-indigo-500/5 border-indigo-500/20'"
+                      class="p-3 border rounded-lg space-y-2">
+                      <div class="flex justify-between items-center text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+                        <span>Chunk {{ idx + 1 }}</span>
+                        <span>Range: {{ chunk.start }} - {{ chunk.end }} chars</span>
+                      </div>
+                      <div class="whitespace-pre-wrap text-zinc-700 dark:text-zinc-200 font-sans text-sm">
+                        <!-- Highlight overlap visual boundary -->
+                        @if (chunk.overlapStart !== -1) {
+                          <span class="bg-amber-500/15 dark:bg-amber-500/10 border-b border-amber-500/30 text-zinc-800 dark:text-zinc-100 font-semibold" title="Overlapping section from previous chunk">
+                            {{ chunk.text.slice(0, chunk.overlapEnd - chunk.start) }}
+                          </span>
+                        }
+                        <span>
+                          {{ chunk.text.slice(chunk.overlapEnd === -1 ? 0 : chunk.overlapEnd - chunk.start) }}
+                        </span>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Action Submit -->
+          <button 
+            (click)="indexDocument()"
+            class="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold rounded-xl text-white bg-violet-600 hover:bg-violet-700 shadow-md shadow-violet-500/15 transition-all cursor-pointer">
+            <lucide-icon [name]="DatabaseIcon" class="w-4 h-4"></lucide-icon>
+            Embed & Save to Vector Database
+          </button>
+
+        </div>
+      }
+
+    </div>
+
+    <!-- Right Column: Document List & Database Stats (5 cols) -->
+    <div class="lg:col-span-5 space-y-6">
+      
+      <!-- Statistics / DB Details -->
+      <div class="glass-card rounded-2xl p-5 space-y-4">
+        <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 flex items-center gap-2 text-sm uppercase tracking-wider text-zinc-400">
+          <lucide-icon [name]="DatabaseIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+          Vault Statistics
+        </h3>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-zinc-50 dark:bg-zinc-900/40 p-4 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40">
+            <div class="text-xs text-zinc-400 font-medium">Documents Indexed</div>
+            <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mt-1">{{ documents().length }}</div>
+          </div>
+          <div class="bg-zinc-50 dark:bg-zinc-900/40 p-4 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40">
+            <div class="text-xs text-zinc-400 font-medium">Total Vector Chunks</div>
+            <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mt-1">{{ chunks().length }}</div>
+          </div>
+        </div>
+
+        <div class="text-xs text-zinc-400 leading-normal flex gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1"></span>
+          <span>
+            Embedding Mode: <span class="font-semibold text-zinc-700 dark:text-zinc-200">{{ settingsService.embeddingMode() === 'local-vsm' ? 'Local TF-IDF VSM' : 'Neural API (' + settingsService.provider() + ')' }}</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Indexed Documents List -->
+      <div class="glass-card rounded-2xl p-5 flex flex-col space-y-4">
+        <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 flex items-center gap-2 text-sm uppercase tracking-wider text-zinc-400">
+          <lucide-icon [name]="FileIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+          Indexed Documents
+        </h3>
+
+        @if (documents().length === 0) {
+          <div class="text-center py-6 text-zinc-400 text-xs">
+            No files indexed yet. Upload documents on the left.
+          </div>
+        }
+
+        @if (documents().length > 0) {
+          <div class="space-y-2 max-h-[300px] overflow-y-auto pr-1 scrollbar-thin">
+            @for (doc of documents(); track doc.name) {
+              <div 
+                class="flex items-center justify-between p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200/30 dark:border-zinc-800/30 hover:border-zinc-200 dark:hover:border-zinc-800 transition-all">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <lucide-icon [name]="FileIcon" class="w-4 h-4 text-violet-500 shrink-0"></lucide-icon>
+                  <div class="min-w-0">
+                    <div class="text-xs font-semibold text-zinc-800 dark:text-zinc-200 truncate" [title]="doc.name">{{ doc.name }}</div>
+                    <div class="text-[10px] text-zinc-400 mt-0.5">{{ doc.chunkCount }} chunks | {{ (doc.size / 1024).toFixed(1) }} KB</div>
+                  </div>
+                </div>
+                <button 
+                  (click)="deleteDocument(doc.name)"
+                  class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-500 hover:bg-rose-500/5 transition-all shrink-0 cursor-pointer">
+                  <lucide-icon [name]="TrashIcon" class="w-4 h-4"></lucide-icon>
+                </button>
+              </div>
+            }
+          </div>
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Full-Width Bottom Panel: Database Vector Explorer -->
+  <div class="glass-card rounded-2xl p-6 space-y-4">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <div>
+        <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 flex items-center gap-2 text-sm uppercase tracking-wider text-zinc-400">
+          <lucide-icon [name]="DatabaseIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+          Database Vector Explorer
+        </h3>
+        <p class="text-xs text-zinc-400 mt-0.5">Explore the raw texts and high-dimensional vector embeddings stored on your machine.</p>
+      </div>
+      <div class="text-[10px] bg-violet-500/10 text-violet-500 font-mono px-2 py-1 rounded-lg">
+        Dimension count: {{ chunks().length > 0 ? chunks()[0].embedding.length : 0 }} coordinates
+      </div>
+    </div>
+
+    <!-- Table of Chunks -->
+    <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-zinc-50/20 dark:bg-zinc-950/20">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-zinc-50 dark:bg-zinc-900/60 border-b border-zinc-200 dark:border-zinc-900 text-zinc-400 font-semibold">
+              <th class="p-3">Source Doc</th>
+              <th class="p-3">Chunk</th>
+              <th class="p-3">Text Snippet</th>
+              <th class="p-3">Vector Heatmap Visualization</th>
+              <th class="p-3 text-right">Words</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-200/50 dark:divide-zinc-900/50">
+            @if (chunks().length === 0) {
+              <tr>
+                <td colspan="5" class="p-8 text-center text-zinc-400">No database vectors to display.</td>
+              </tr>
+            }
+            @for (chunk of chunks().slice(0, 50); track chunk.documentName + '-' + chunk.index; let idx = $index) {
+              <tr class="hover:bg-zinc-50/40 dark:hover:bg-zinc-900/10 transition-colors">
+                <!-- Source -->
+                <td class="p-3 font-medium text-zinc-500 max-w-[120px] truncate" [title]="chunk.documentName">
+                  {{ chunk.documentName }}
+                </td>
+                <!-- Chunk Id -->
+                <td class="p-3 text-zinc-400 font-mono">
+                  #{{ chunk.index }}
+                </td>
+                <!-- Text snippet -->
+                <td class="p-3 text-zinc-600 dark:text-zinc-300 font-sans max-w-[320px] truncate" [title]="chunk.text">
+                  {{ chunk.text }}
+                </td>
+                <!-- Sparkline vector -->
+                <td class="p-3">
+                  <div class="flex items-end gap-[2px] h-6 w-full max-w-[180px]" title="First 12 elements of the vector embedding normalized">
+                    @for (sample of getVectorSparkline(chunk.embedding); track $index) {
+                      <div 
+                        [class]="sample.color"
+                        [style.height.%]="sample.val"
+                        class="flex-1 min-w-[3px] rounded-xs transition-all">
+                      </div>
+                    }
+                  </div>
+                </td>
+                <!-- Word Count -->
+                <td class="p-3 text-right text-zinc-400 font-mono">
+                  {{ chunk.wordCount }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      @if (chunks().length > 50) {
+        <div 
+          class="text-center py-2.5 bg-zinc-50/50 dark:bg-zinc-900/20 text-[10px] text-zinc-400 border-t border-zinc-200 dark:border-zinc-900">
+          Showing top 50 chunks. Total chunks in database: {{ chunks().length }}.
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Loading overlay -->
+@if (isProcessing()) {
+  <div class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 animate-fade-in">
+    <div class="glass-card p-6 rounded-2xl max-w-sm w-full text-center space-y-4 border border-zinc-800/40 flex flex-col items-center">
+      <div class="p-3 bg-violet-500/10 text-violet-500 rounded-full animate-spin">
+        <lucide-icon [name]="LoaderIcon" class="w-6 h-6"></lucide-icon>
+      </div>
+      <div class="space-y-1">
+        <h3 class="font-semibold text-zinc-900 dark:text-zinc-50 text-sm">Processing Document</h3>
+        <p class="text-xs text-zinc-400">{{ processingStatus() }}</p>
+      </div>
+    </div>
+  </div>
+}

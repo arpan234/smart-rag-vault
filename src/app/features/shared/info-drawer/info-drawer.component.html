@@ -1,0 +1,324 @@
+<!-- Info Drawer Backdrop -->
+<div 
+  *ngIf="settingsService.isInfoOpen()" 
+  class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-xs z-50 animate-fade-in"
+  (click)="settingsService.closeInfo()">
+</div>
+
+<!-- Info Drawer Panel -->
+<div 
+  *ngIf="settingsService.isInfoOpen()" 
+  class="fixed top-0 right-0 bottom-0 w-full sm:w-[520px] bg-white dark:bg-zinc-950 border-l border-zinc-200/60 dark:border-zinc-800/60 shadow-2xl z-50 flex flex-col animate-slide-in select-none"
+  role="dialog" 
+  aria-modal="true">
+  
+  <!-- Header -->
+  <div class="px-6 py-5 border-b border-zinc-100 dark:border-zinc-900 flex justify-between items-center bg-zinc-50/50 dark:bg-zinc-900/20">
+    <div class="flex items-center gap-2.5">
+      <lucide-icon [name]="BookIcon" class="w-5 h-5 text-violet-500"></lucide-icon>
+      <div>
+        <h2 class="text-base font-bold text-zinc-900 dark:text-zinc-50 leading-none">RAG Architecture Guide</h2>
+        <span class="text-[9px] text-zinc-400 font-medium tracking-wider uppercase mt-1 block">How it works & Core Mathematics</span>
+      </div>
+    </div>
+    <button 
+      (click)="settingsService.closeInfo()"
+      class="p-1.5 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors">
+      <lucide-icon [name]="XIcon" class="w-5 h-5"></lucide-icon>
+    </button>
+  </div>
+
+  <!-- Interactive Educational Tabs Header -->
+  <div class="px-6 py-2 bg-zinc-50/30 dark:bg-zinc-950/20 border-b border-zinc-100 dark:border-zinc-900 flex gap-2 overflow-x-auto scrollbar-none">
+    <button 
+      (click)="setTab('pipeline')"
+      [class.border-violet-500]="activeTab() === 'pipeline'"
+      [class.text-violet-600]="activeTab() === 'pipeline'"
+      [class.dark:text-violet-400]="activeTab() === 'pipeline'"
+      [class.text-zinc-500]="activeTab() !== 'pipeline'"
+      class="pb-2 pt-1 border-b-2 border-transparent text-xs font-bold px-1 transition-all cursor-pointer whitespace-nowrap">
+      RAG Pipeline
+    </button>
+    <button 
+      (click)="setTab('math')"
+      [class.border-violet-500]="activeTab() === 'math'"
+      [class.text-violet-600]="activeTab() === 'math'"
+      [class.dark:text-violet-400]="activeTab() === 'math'"
+      [class.text-zinc-500]="activeTab() !== 'math'"
+      class="pb-2 pt-1 border-b-2 border-transparent text-xs font-bold px-1 transition-all cursor-pointer whitespace-nowrap">
+      Vector Math
+    </button>
+    <button 
+      (click)="setTab('guide')"
+      [class.border-violet-500]="activeTab() === 'guide'"
+      [class.text-violet-600]="activeTab() === 'guide'"
+      [class.dark:text-violet-400]="activeTab() === 'guide'"
+      [class.text-zinc-500]="activeTab() !== 'guide'"
+      class="pb-2 pt-1 border-b-2 border-transparent text-xs font-bold px-1 transition-all cursor-pointer whitespace-nowrap">
+      App Navigation
+    </button>
+  </div>
+
+  <!-- Content Panel (Scrollable) -->
+  <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 scrollbar-thin select-text">
+    
+    <!-- ================= TAB 1: RAG PIPELINE ================= -->
+    <div *ngIf="activeTab() === 'pipeline'" class="space-y-6 animate-fade-in">
+      
+      <div class="space-y-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">RAG High-Level Workflow</h3>
+        <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          Retrieval-Augmented Generation bridges the gap between static LLM intelligence and dynamic local data. Here is the step-by-step pipeline running inside your browser:
+        </p>
+      </div>
+
+      <!-- Vertical Interactive Pipeline Visualizer -->
+      <div class="relative pl-8 border-l border-zinc-200 dark:border-zinc-800/80 ml-3 space-y-7">
+        
+        <!-- Step 1 -->
+        <div class="relative">
+          <div class="absolute -left-11.5 top-0 w-7 h-7 rounded-full bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-extrabold text-[11px] shadow-xs">
+            1
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">Document Ingestion & Chunking</h4>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              When a PDF or txt file is dropped, we load the raw text and split it into smaller overlapping segments (chunks) based on your <span class="font-mono text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-900 px-1 rounded">chunkSize</span> configuration.
+            </p>
+            <div class="mt-2 p-3 bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200/50 dark:border-zinc-800/30 rounded-xl flex gap-2 items-center">
+              <div class="text-[10px] text-zinc-400 font-mono flex-1 leading-relaxed">
+                Raw Document
+                <div class="mt-1 flex gap-1 font-sans">
+                  <span class="px-2 py-1 bg-violet-500/10 text-violet-600 dark:text-violet-400 rounded-sm border border-violet-500/20 text-[9px] font-bold">Chunk #1</span>
+                  <span class="px-2 py-1 bg-pink-500/10 text-pink-500 rounded-sm border border-pink-500/20 text-[9px] font-bold">Overlap</span>
+                  <span class="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-sm border border-emerald-500/20 text-[9px] font-bold">Chunk #2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="relative">
+          <div class="absolute -left-11.5 top-0 w-7 h-7 rounded-full bg-violet-500/10 border border-violet-500/30 flex items-center justify-center text-violet-600 dark:text-violet-400 font-extrabold text-[11px] shadow-xs">
+            2
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">Vector Embedding</h4>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              We convert each text chunk into a high-dimensional mathematical coordinate vector. 
+              These coordinates represent semantic concepts. Similar sentences will be positioned close to each other in this virtual coordinate space.
+            </p>
+            <div class="mt-2 p-3 bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200/50 dark:border-zinc-800/30 rounded-xl font-mono text-[9px] text-zinc-400 leading-relaxed">
+              "Machine learning processes data" ➔ <span class="text-violet-500 dark:text-violet-400 font-bold">[0.12, -0.49, 0.81, ...]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative">
+          <div class="absolute -left-11.5 top-0 w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-extrabold text-[11px] shadow-xs">
+            3
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">Vector DB Storage & Cosine Search</h4>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              Vectors are cached locally in **IndexedDB**. When you enter a prompt, we convert your prompt into a vector and compare the mathematical angle (**Cosine Similarity**) between your prompt vector and all cached document vector chunks, pulling the top-K matches.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="relative">
+          <div class="absolute -left-11.5 top-0 w-7 h-7 rounded-full bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-600 dark:text-pink-400 font-extrabold text-[11px] shadow-xs">
+            4
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">Context Synthesis & LLM Chat</h4>
+            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              We compile the retrieved paragraphs alongside your prompt inside a structural RAG template (context wrapping) and transmit the payload to the LLM (Gemini or OpenAI). The AI responds streams back factually correct citations.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= TAB 2: VECTOR MATH ================= -->
+    <div *ngIf="activeTab() === 'math'" class="space-y-6 animate-fade-in">
+      
+      <div class="space-y-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">The Core Mathematics</h3>
+        <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          How do machines understand that "kitten" and "cat" are related? They use vector mathematics. This app operates under two distinct vector engines:
+        </p>
+      </div>
+
+      <!-- Compare Engines Matrix Card -->
+      <div class="glass-card p-4 rounded-xl border border-zinc-200/50 dark:border-zinc-800/50 space-y-3">
+        <h4 class="text-[11px] font-bold uppercase tracking-wider text-violet-500">Comparing Embedding Engines</h4>
+        <div class="grid grid-cols-2 gap-3 text-left">
+          <div class="p-2.5 bg-zinc-50 dark:bg-zinc-900/50 rounded-lg space-y-1 border border-zinc-100 dark:border-zinc-800/30">
+            <span class="text-[10px] font-bold text-zinc-800 dark:text-zinc-200 block">Local VSM (TF-IDF)</span>
+            <span class="text-[9px] text-zinc-400 leading-normal block">Calculates exact word frequencies across vocabulary vectors. Runs 100% offline in JS, free, but struggles with semantic synonyms.</span>
+          </div>
+          <div class="p-2.5 bg-zinc-50 dark:bg-zinc-900/50 rounded-lg space-y-1 border border-zinc-100 dark:border-zinc-800/30">
+            <span class="text-[10px] font-bold text-zinc-800 dark:text-zinc-200 block">Neural API Embeddings</span>
+            <span class="text-[9px] text-zinc-400 leading-normal block">Uses pre-trained transformer model APIs to output multi-thousand dimension dense vectors capturing high-level conceptual meaning.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cosine Similarity Section -->
+      <div class="space-y-3">
+        <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide flex items-center gap-1.5">
+          <lucide-icon [name]="ScaleIcon" class="w-4 h-4 text-violet-500"></lucide-icon>
+          Cosine Similarity Metric
+        </h4>
+        <p class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          Retrieval matches documents by computing the Cosine Similarity angle between your query vector $A$ and document vector $B$. By measuring the angle rather than the straight-line Euclidean distance, long files containing repetitive words aren't skewed.
+        </p>
+
+        <!-- Equation Card -->
+        <div class="p-4 bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/50 dark:border-zinc-800/50 rounded-2xl flex flex-col items-center justify-center gap-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Cosine Similarity Formula</span>
+          <div class="font-mono text-sm font-bold text-zinc-800 dark:text-zinc-200 bg-white dark:bg-zinc-950 px-4 py-2 border border-zinc-200/30 dark:border-zinc-800/40 rounded-xl shadow-xs">
+            cos(θ) = (A • B) / (||A|| ||B||)
+          </div>
+          <span class="text-[9px] text-zinc-400 font-medium text-center">Output scale ranges from 1.0 (perfect directional alignment) to 0.0 (perpendicular / no relation).</span>
+        </div>
+      </div>
+
+      <!-- Interactive Term Glossary -->
+      <div class="space-y-2">
+        <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">Interactive Glossary</h4>
+        
+        <div class="space-y-1.5">
+          <!-- Term 1 -->
+          <div 
+            (click)="toggleMathTerm('tfidf')" 
+            class="p-3 bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/30 rounded-xl cursor-pointer hover:border-violet-500/20 transition-all">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] font-bold text-zinc-800 dark:text-zinc-200">TF-IDF (Term Frequency-Inverse Document Frequency)</span>
+              <span class="text-[10px] text-violet-500 font-bold font-mono">{{ expandedMathTerm() === 'tfidf' ? 'Hide' : 'Expand' }}</span>
+            </div>
+            <p 
+              *ngIf="expandedMathTerm() === 'tfidf'" 
+              class="text-[10px] text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed animate-fade-in select-text">
+              TF-IDF scores word importance in a document. **Term Frequency (TF)** measures how often a word appears in a chunk. **Inverse Document Frequency (IDF)** offsets this by how common that word is across all documents, highlighting unique keywords while discounting filler terms (like "and", "the").
+            </p>
+          </div>
+
+          <!-- Term 2 -->
+          <div 
+            (click)="toggleMathTerm('dense')" 
+            class="p-3 bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/30 rounded-xl cursor-pointer hover:border-violet-500/20 transition-all">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] font-bold text-zinc-800 dark:text-zinc-200">Dense vs Sparse Vectors</span>
+              <span class="text-[10px] text-violet-500 font-bold font-mono">{{ expandedMathTerm() === 'dense' ? 'Hide' : 'Expand' }}</span>
+            </div>
+            <p 
+              *ngIf="expandedMathTerm() === 'dense'" 
+              class="text-[10px] text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed animate-fade-in select-text">
+              **Sparse vectors** (like local TF-IDF) have dimensions equal to the entire vocabulary length, with values mostly being zero. They match exact keywords. **Dense vectors** (like OpenAI/Gemini Embeddings) are fixed lengths (768 or 1536 dimensions) filled with non-zero decimals. They match conceptual patterns even when exact keywords don't overlap (e.g., matching "puppy" to "young dog").
+            </p>
+          </div>
+
+          <!-- Term 3 -->
+          <div 
+            (click)="toggleMathTerm('dot')" 
+            class="p-3 bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/30 rounded-xl cursor-pointer hover:border-violet-500/20 transition-all">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] font-bold text-zinc-800 dark:text-zinc-200">Vector Dot Product (A • B)</span>
+              <span class="text-[10px] text-violet-500 font-bold font-mono">{{ expandedMathTerm() === 'dot' ? 'Hide' : 'Expand' }}</span>
+            </div>
+            <p 
+              *ngIf="expandedMathTerm() === 'dot'" 
+              class="text-[10px] text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed animate-fade-in select-text">
+              The Dot Product multiplies matching indices of two vectors and sums them up: `(A1*B1) + (A2*B2) + ...`. If coordinates align in positive directions, the dot product is high; if they oppose or are orthogonal, it is zero or negative.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= TAB 3: APP GUIDE ================= -->
+    <div *ngIf="activeTab() === 'guide'" class="space-y-5 animate-fade-in">
+      
+      <div class="space-y-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">Application Dashboard Map</h3>
+        <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          Smart RAG Vault is separated into three specialized functional screens designed for educational experimentation:
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- Chat agent guide -->
+        <div class="p-3.5 bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/30 rounded-2xl flex gap-3">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-violet-500/10 shrink-0">
+            <lucide-icon [name]="SparklesIcon" class="w-4 h-4"></lucide-icon>
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">AI Agent Chat</h4>
+            <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              Interact directly with the RAG-enabled LLM. Test response quality, view inline citation footnotes, click source tags to review matching database segments, and watch floating gradient meshes animate during inference retrieval.
+            </p>
+          </div>
+        </div>
+
+        <!-- Knowledge vault guide -->
+        <div class="p-3.5 bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/30 rounded-2xl flex gap-3">
+          <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20 flex items-center justify-center shadow-xs shrink-0">
+            <lucide-icon [name]="DatabaseIcon" class="w-4 h-4"></lucide-icon>
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">Knowledge Vault</h4>
+            <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              Add documents (PDF and txt). Observe chunk structures, view mathematical word-sparkline tables, inspect vector databases, customize chunk sizes and overlapping sizes, and reset storage indices.
+            </p>
+          </div>
+        </div>
+
+        <!-- RAG Playground guide -->
+        <div class="p-3.5 bg-zinc-50/50 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/30 rounded-2xl flex gap-3">
+          <div class="w-8 h-8 rounded-xl bg-pink-500/10 text-pink-500 border border-pink-500/20 flex items-center justify-center shadow-xs shrink-0">
+            <lucide-icon [name]="CpuIcon" class="w-4 h-4"></lucide-icon>
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">RAG Playground</h4>
+            <p class="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              Trace search queries through the pipeline step-by-step. See raw query tokenization, step-by-step similarity scoring lists, exact ranking calculations, final prompt assemblies, and LLM text completion streams side-by-side.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer Actions with Sandbox Privacy Badge -->
+  <div class="px-6 py-4 border-t border-zinc-100 dark:border-zinc-900 flex flex-col gap-3 bg-zinc-50/50 dark:bg-zinc-900/10 shrink-0">
+    
+    <!-- Sandbox Badge -->
+    <div class="flex items-center gap-2 p-2 bg-emerald-500/10 dark:bg-emerald-500/5 border border-emerald-500/20 dark:border-emerald-500/15 rounded-xl">
+      <lucide-icon [name]="LockIcon" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"></lucide-icon>
+      <div class="text-[10px] text-emerald-800 dark:text-emerald-300 leading-normal">
+        <span class="font-bold">100% Client-Side Sandbox:</span> Your document text, parsing engines, database vectors, and similarity comparisons remain fully inside your browser session.
+      </div>
+    </div>
+
+    <!-- Close button -->
+    <button 
+      (click)="settingsService.closeInfo()"
+      class="w-full px-4 py-2.5 text-center text-xs font-semibold rounded-xl text-white bg-violet-600 hover:bg-violet-700 shadow-md shadow-violet-500/15 transition-colors cursor-pointer">
+      Got it, thank you!
+    </button>
+  </div>
+
+</div>
